@@ -1,0 +1,24 @@
+.view-calendar-container {
+  margin: auto;
+
+  .rdrDateRangePickerWrapper {
+    border-radius: 10px !important;
+  }
+
+  .rdrDefinedRangesWrapper,
+  .rdrDateDisplayWrapper {
+    display: none;
+  }
+
+  .rdrDayDisabled {
+    text-decoration: line-through;
+  }
+
+  .rdrMonths {
+    pointer-events: none;
+  }
+
+  .rdrDayPassive {
+    opacity: 1;
+  }
+}

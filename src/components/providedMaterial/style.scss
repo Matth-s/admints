@@ -1,0 +1,17 @@
+.provided-material {
+  ul {
+    margin-left: 40px;
+  }
+
+  li {
+    list-style: inside;
+  }
+
+  li:not(:last-child) {
+    margin-bottom: 10px;
+  }
+
+  p {
+    text-align: center;
+  }
+}

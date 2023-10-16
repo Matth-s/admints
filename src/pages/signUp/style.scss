@@ -1,0 +1,15 @@
+.sign-up-container {
+  position: relative;
+  height: 100vh;
+
+  .sign-up-content {
+    border: 1px solid grey;
+    padding: 40px;
+    border-radius: 20px;
+  }
+
+  h2 {
+    margin-bottom: 40px;
+    text-align: center;
+  }
+}

@@ -1,0 +1,63 @@
+button,
+input[type='submit'] {
+  cursor: pointer;
+}
+
+button {
+  height: 40px;
+  padding: 0 20px;
+  border-radius: 10px;
+  border: 0;
+}
+
+.isLoading {
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+.text-error {
+  color: rgb(228, 98, 98);
+}
+
+.modal-container {
+  position: fixed;
+  inset: 0;
+  background-color: rgba($color: #000000, $alpha: 0.6);
+}
+
+.flex {
+  display: flex;
+
+  &__alignCenter {
+    align-items: center;
+  }
+
+  &__spaceBetween {
+    justify-content: space-between;
+  }
+}
+
+.absolute {
+  position: absolute;
+
+  &__center {
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+  }
+}
+
+label {
+  display: block;
+  margin-bottom: 8px;
+}
+
+input,
+textarea {
+  width: 100%;
+  height: 40px;
+  border-radius: 10px;
+  padding: 10px;
+  border: 1px solid grey;
+  margin-bottom: 12px;
+}

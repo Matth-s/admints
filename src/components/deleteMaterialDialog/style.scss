@@ -1,0 +1,14 @@
+.delete-material-dialog-container {
+  background-color: #fff;
+  height: auto;
+  width: fit-content;
+  margin: auto;
+  padding: 50px;
+  border-radius: 10px;
+
+  .button-div {
+    gap: 20px;
+    margin: 20px auto 0;
+    width: fit-content;
+  }
+}
