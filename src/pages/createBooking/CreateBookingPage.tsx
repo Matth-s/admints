@@ -1,27 +1,31 @@
 import React, { useEffect } from 'react';
 
 import Header from '../../components/header/Header';
-import { useAppSelector } from '../../store/store';
-import { useNavigate } from 'react-router-dom';
+import { useAppDispatch, useAppSelector } from '../../store/store';
+import { useNavigate, useParams } from 'react-router-dom';
+import BookingForm from '../../components/forms/booking/BookingForm';
+
+import './style.scss';
+import { getMaterialByIdService } from '../../services/material-service';
 
 const CreateBookingPage = () => {
+  const { id } = useParams();
   const { createBooking } = useAppSelector(
     (state) => state.bookingSlice
   );
   const navigate = useNavigate();
-
-  console.log(createBooking);
-
-  useEffect(() => {
-    if (!createBooking) {
-      return navigate('/material');
-    }
-  }, []);
+  if (!createBooking) {
+    return;
+  }
 
   return (
-    <div className="create-booking-page">
+    <section className="create-booking-page">
       <Header />
-    </div>
+
+      <div className="create-booking-content">
+        <BookingForm booking={createBooking} />
+      </div>
+    </section>
   );
 };
 

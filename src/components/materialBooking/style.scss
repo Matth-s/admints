@@ -1,0 +1,44 @@
+.material-booking-container {
+  input {
+    margin-bottom: 0;
+    width: unset;
+  }
+
+  table {
+    button {
+      margin: 0;
+    }
+  }
+
+  thead {
+    margin-bottom: 10px;
+  }
+
+  tbody {
+    td:not(:last-child) {
+      margin-right: 10px;
+    }
+
+    tr:not(:last-child) {
+      margin-bottom: 10px;
+    }
+  }
+
+  td:first-child {
+    input {
+      width: 300px;
+    }
+  }
+
+  td:not(:first-child) {
+    input {
+      width: 80px;
+      text-align: center;
+    }
+  }
+
+  button {
+    display: block;
+    margin: 20px auto 0;
+  }
+}

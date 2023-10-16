@@ -45,7 +45,7 @@ const AddBookingButton = ({ material }: Props) => {
 
   const handleAddBooking = () => {
     dispatch(setCreateBooking(materialToBooking));
-    navigate('/create-booking');
+    navigate(`/create-booking/${material.id}`);
   };
 
   return (

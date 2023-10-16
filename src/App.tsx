@@ -83,7 +83,7 @@ function App() {
                 element={<BookingPage isLoading={bookingLoading} />}
               />
               <Route
-                path="/create-booking"
+                path="/create-booking/:id"
                 element={<CreateBookingPage />}
               />
             </Route>

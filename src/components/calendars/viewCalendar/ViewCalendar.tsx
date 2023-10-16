@@ -18,8 +18,6 @@ const ViewCalendar = ({ disabledDates }: Props) => {
         })
       : [];
 
-  console.log(disabledDateRanges);
-
   return (
     <div className="view-calendar-container">
       <DateRangePicker

@@ -1,6 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import { Booking } from '../../../schema/booking-schema';
+
+import MaterialBooking from '../../materialBooking/MaterialBooking';
+import BookingCalendar from '../../calendars/bookingCalendar/BookingCalendar';
 
 import './style.scss';
 
@@ -13,10 +16,40 @@ const BookingForm = ({ booking }: Props) => {
 
   console.log(dataForm);
 
+  useEffect(() => {
+    const materialTotal: number =
+      dataForm.providedMaterialsBooking.length > 0
+        ? dataForm.providedMaterialsBooking.reduce((total, item) => {
+            return total + item.total;
+          }, 0)
+        : 0;
+
+    const bookingTotal: number =
+      dataForm.bookingDates.length * dataForm.pricePerDay;
+
+    const coachingTotal: number =
+      dataForm.coachingTime * dataForm.coachingPriceHour;
+
+    setDataForm((prev) => ({
+      ...prev,
+      total: materialTotal + bookingTotal + coachingTotal,
+    }));
+  }, [
+    dataForm.providedMaterialsBooking,
+    dataForm.bookingDates,
+    dataForm.coachingTime,
+  ]);
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
 
     setDataForm((prev) => {
+      if (name === 'coachingTime') {
+        return {
+          ...prev,
+          coachingTime: value === '' ? 0 : parseInt(value),
+        };
+      }
       return {
         ...prev,
         [name]: value.trim(),
@@ -26,6 +59,8 @@ const BookingForm = ({ booking }: Props) => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    console.log('submit');
   };
 
   return (
@@ -109,27 +144,31 @@ const BookingForm = ({ booking }: Props) => {
                 type="number"
                 name="coachingTime"
                 id="coachingTime"
-                defaultValue={dataForm.total}
+                defaultValue={dataForm.coachingTime}
+                onChange={(e) => handleChange(e)}
               />
             </div>
 
             <div className="form-div">
-              <label htmlFor="total">Total</label>
-              <input
-                type="number"
-                name="total"
-                id="total"
-                disabled
-                defaultValue={dataForm.total}
-              />
+              <p>Total : {dataForm.total} €</p>
             </div>
           </div>
+
           <div className="right-part">
             <div className="top">
               <h3>Définir les dates de la location</h3>
+              <BookingCalendar
+                disabledDates={dataForm.unavailableDates}
+                setDataForm={setDataForm}
+              />
             </div>
+
             <div className="down">
               <h3>Matériel founit</h3>
+              <MaterialBooking
+                providedMaterials={dataForm.providedMaterialsBooking}
+                setFormData={setDataForm}
+              />
             </div>
           </div>
         </div>
