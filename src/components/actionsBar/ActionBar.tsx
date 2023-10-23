@@ -1,10 +1,12 @@
 import React from 'react';
 
-import DeleteMaterialButton from '../buttons/deleteMaterialButton/DeleteMaterialButton';
+import { v4 as uuidv4 } from 'uuid';
+import { setCreateBooking } from '../../store/features/bookingSlice';
+import { useAppDispatch } from '../../store/store';
+import { useNavigate } from 'react-router-dom';
+import { Material } from '../../schema/material-schema';
 
 import './style.scss';
-import AddBookingButton from '../buttons/addBookingButton/AddBookingButton';
-import { Material } from '../../schema/material-schema';
 
 type Props = {
   setIsEditing: React.Dispatch<React.SetStateAction<boolean>>;
@@ -17,14 +19,57 @@ const ActionBar = ({
   setOpenDelete,
   material,
 }: Props) => {
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+
+  const handleAddBooking = () => {
+    const providedMaterialsBooking =
+      material.providedMaterials.length > 0
+        ? material.providedMaterials.map((item) => {
+            return {
+              ...item,
+              quantity: 1,
+              total: item.price,
+            };
+          })
+        : [];
+
+    const materialToBooking = {
+      id: uuidv4(),
+      idMaterial: material.id,
+      materialName: material.name,
+      total: 0,
+      pricePerDay: material.pricePerDay,
+      providedMaterialsBooking: providedMaterialsBooking,
+      firstName: '',
+      lastName: '',
+      phone: '',
+      email: '',
+      city: '',
+      street: '',
+      unavailableDates: material.unavailableDates,
+      bookingDates: [],
+      coachingPriceHour: material.coachingPriceHour,
+      coachingTime: 0,
+      isCompleted: false,
+      downPayment: material.downPayment,
+      timestamp: Date.now(),
+    };
+
+    dispatch(setCreateBooking(materialToBooking));
+    navigate(`/create-booking/${material.id}`);
+  };
   return (
     <div className="action-bar flex">
       <button onClick={() => setIsEditing((prev) => !prev)}>
         Editer
       </button>
 
-      <AddBookingButton material={material} />
-      <DeleteMaterialButton setDelete={() => setOpenDelete(true)} />
+      <button onClick={() => handleAddBooking()}>
+        Ajouter une réservation
+      </button>
+
+      <button onClick={() => setOpenDelete(true)}>Supprimer</button>
     </div>
   );
 };

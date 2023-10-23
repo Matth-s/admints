@@ -1,17 +1,24 @@
-import React from 'react';
-import HomeButton from '../buttons/goHome/HomeButton';
+import { useNavigate } from 'react-router-dom';
 
 import './style.scss';
 
 type Props = { id: string };
 
 const MaterialNotFound = ({ id }: Props) => {
+  const navigate = useNavigate();
+
+  const handleGoHome = () => {
+    navigate('/material');
+  };
+
   return (
     <div className="material-not-found absolute absolute__center">
       <h2>
         Le matériel avec l'identifiant '{id}' n'a pas été trouvé
       </h2>
-      <HomeButton />
+      <button onClick={() => handleGoHome()}>
+        Retour a l'accueil
+      </button>
     </div>
   );
 };

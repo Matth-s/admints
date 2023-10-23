@@ -1,20 +1,33 @@
 import React, { useState, useEffect } from 'react';
 
 import { Booking } from '../../../schema/booking-schema';
+import { useAppDispatch, useAppSelector } from '../../../store/store';
 
 import MaterialBooking from '../../materialBooking/MaterialBooking';
 import BookingCalendar from '../../calendars/bookingCalendar/BookingCalendar';
+
+import {
+  createBookingService,
+  updateBookingService,
+} from '../../../services/booking-service';
+import { useNavigate } from 'react-router-dom';
 
 import './style.scss';
 
 type Props = {
   booking: Booking;
+  isEditing: boolean;
+  setIsEditing?: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-const BookingForm = ({ booking }: Props) => {
+const BookingForm = ({ booking, isEditing, setIsEditing }: Props) => {
   const [dataForm, setDataForm] = useState<Booking>(booking);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  console.log(dataForm);
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+
+  const { token } = useAppSelector((state) => state.userSlice);
 
   useEffect(() => {
     const materialTotal: number =
@@ -32,7 +45,11 @@ const BookingForm = ({ booking }: Props) => {
 
     setDataForm((prev) => ({
       ...prev,
-      total: materialTotal + bookingTotal + coachingTotal,
+      total:
+        materialTotal +
+        bookingTotal +
+        coachingTotal +
+        dataForm.downPayment,
     }));
   }, [
     dataForm.providedMaterialsBooking,
@@ -59,17 +76,47 @@ const BookingForm = ({ booking }: Props) => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setIsLoading(true);
 
-    console.log('submit');
+    if (isEditing) {
+      await dispatch(
+        updateBookingService({ token, booking: dataForm })
+      )
+        .unwrap()
+        .then((res: number) => {
+          if (res === 200 && setIsEditing) {
+            setIsEditing(false);
+          }
+        })
+        .catch((error) => console.log(error))
+        .finally(() => setIsLoading(false));
+    } else {
+      await dispatch(
+        createBookingService({ booking: dataForm, token })
+      )
+        .unwrap()
+        .then((res: number) => {
+          if (res === 201) {
+            navigate(`/view-booking/${dataForm.id}`);
+          }
+        })
+        .catch((error) => console.log(error))
+        .finally(() => setIsLoading(false));
+    }
   };
 
   return (
     <div className="form-container">
-      <h2>Nouvelle réservation pour '{dataForm.materialName}'</h2>
+      <h2>
+        {isEditing
+          ? `Modification de réservation pour '${dataForm.materialName}'`
+          : `Nouvelle réservation pour '${dataForm.materialName}'`}
+      </h2>
 
       <form onSubmit={(e) => handleSubmit(e)}>
         <div className="part-div flex flex__spaceBetween">
           <div className="left-part">
+            <h3>Renseignement</h3>
             <div className="form-div">
               <label htmlFor="lastName">Nom</label>
               <input
@@ -160,6 +207,7 @@ const BookingForm = ({ booking }: Props) => {
               <BookingCalendar
                 disabledDates={dataForm.unavailableDates}
                 setDataForm={setDataForm}
+                selectedDate={dataForm.bookingDates}
               />
             </div>
 
@@ -173,7 +221,11 @@ const BookingForm = ({ booking }: Props) => {
           </div>
         </div>
 
-        <input type="submit" value="Enregistrer" />
+        <input
+          className={isLoading ? 'isLoading' : ''}
+          type="submit"
+          value={isEditing ? 'Modifier' : 'Enregistrer'}
+        />
       </form>
     </div>
   );

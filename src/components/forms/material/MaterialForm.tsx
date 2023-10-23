@@ -6,18 +6,16 @@ import {
 
 import { FileData } from '../../../schema/file-schema';
 
-import {
-  checkIfIsEmpty,
-  checkProvidedMaterial,
-} from '../../helpers/checkerForm';
-
 import { useAppDispatch, useAppSelector } from '../../../store/store';
 import {
   createMaterialService,
   updateMaterialService,
 } from '../../../services/material-service';
 
-import { postImagesService } from '../../../services/image-service';
+import {
+  postImagesService,
+  updateImageService,
+} from '../../../services/image-service';
 import { useNavigate } from 'react-router-dom';
 
 import AddMaterialForm from '../../addMaterial/AddMaterialForm';
@@ -42,7 +40,6 @@ const MaterialForm = ({
   const [images, setImages] = useState<arrayPicture[]>(
     formData.arrayPicture
   );
-
   const { token } = useAppSelector((state) => state.userSlice);
 
   const dispatch = useAppDispatch();
@@ -64,7 +61,6 @@ const MaterialForm = ({
         name === 'downPayment' ||
         name === 'coachingPriceHour'
       ) {
-        console.log(value);
         return {
           ...prev,
           [name]: value === '' ? 0 : parseInt(value),
@@ -82,29 +78,15 @@ const MaterialForm = ({
     e.preventDefault();
     setIsLoading(true);
 
-    const checkName = checkIfIsEmpty(formData.name);
-    const checkMaterial = checkProvidedMaterial(
-      formData.providedMaterials
-    );
-
     if (files.length > 0) {
-      await dispatch(postImagesService({ files, id: formData.id }))
-        .unwrap()
-        .then((res: arrayPicture[]) => {
-          setFormData((prev) => {
-            return {
-              ...prev,
-              arrayPicture: [...res, ...images],
-            };
-          });
-        })
-        .catch((error) => console.log(error))
-        .finally(() => {
-          setIsLoading(false), console.log(formData);
-        });
+      await dispatch(postImagesService({ files, id: formData.id }));
     }
 
     if (isEditing) {
+      await dispatch(
+        updateImageService({ images, idMaterial: formData.id })
+      );
+
       await dispatch(
         updateMaterialService({
           material: formData,
@@ -126,7 +108,6 @@ const MaterialForm = ({
       )
         .then((res: any) => {
           if (res.payload.status === 201) {
-            console.log(res);
             navigate(`/view-material/${res.payload.idMaterial}`);
           }
         })
@@ -206,11 +187,13 @@ const MaterialForm = ({
 
       <div className="form-div">
         <AddImageForm
+          presentationPicture={formData.presentationPicture}
           arrayPicture={formData.arrayPicture}
           setFiles={setFiles}
           files={files}
           images={images}
           setImages={setImages}
+          setFormData={setFormData}
         />
       </div>
 

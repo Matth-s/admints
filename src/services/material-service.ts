@@ -6,6 +6,7 @@ import {
   addMaterial,
   setDeleteMaterial,
   setMaterial,
+  setUpdateMaterial,
   setViewMaterial,
 } from '../store/features/materialSlice';
 
@@ -69,7 +70,7 @@ export const updateMaterialService = createAsyncThunk(
         }
       );
 
-      dispatch(setViewMaterial(data));
+      dispatch(setUpdateMaterial(data));
 
       return status;
     } catch (error) {
@@ -95,8 +96,6 @@ export const createMaterialService = createAsyncThunk(
           },
         }
       );
-
-      console.log(data, status);
 
       dispatch(addMaterial(data));
       dispatch(setViewMaterial(data));

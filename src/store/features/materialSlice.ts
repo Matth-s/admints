@@ -31,11 +31,12 @@ export const MaterialSlice = createSlice({
     },
     setUpdateMaterial: (state, action: PayloadAction<Material>) => {
       const { payload } = action;
+
       state.viewMaterial = payload;
 
       const newMaterial = state.material.map((item) => {
         if (item.id === payload.id) {
-          return (item = payload);
+          return payload;
         } else {
           return item;
         }
@@ -54,6 +55,43 @@ export const MaterialSlice = createSlice({
 
       state.material = upDateMaterial;
     },
+
+    setAddBookingDate: (
+      state,
+      action: PayloadAction<{ id: string; dates: string[] }>
+    ) => {
+      const { id, dates } = action.payload;
+
+      const upDateMaterial = state.material.map((item) => {
+        if (item.id === id) {
+          const itemUpdate = {
+            ...item,
+            unavailableDates: [...item.unavailableDates, ...dates],
+          };
+          state.viewMaterial = itemUpdate;
+          return itemUpdate;
+        }
+        return item;
+      });
+
+      state.material = upDateMaterial;
+    },
+
+    setDeleteDates: (state, action: PayloadAction<Material>) => {
+      const { payload } = action;
+
+      state.viewMaterial = payload;
+
+      const upDateMaterial = state.material.map((item) => {
+        if (item.id === payload.id) {
+          return payload;
+        }
+
+        return item;
+      });
+
+      state.material = upDateMaterial;
+    },
   },
 });
 
@@ -63,6 +101,8 @@ export const {
   setViewMaterial,
   setUpdateMaterial,
   setDeleteMaterial,
+  setAddBookingDate,
+  setDeleteDates,
 } = MaterialSlice.actions;
 
 export default MaterialSlice.reducer;

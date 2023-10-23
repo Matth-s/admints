@@ -3,6 +3,8 @@ import { configureStore } from '@reduxjs/toolkit';
 import MaterialSlice from './features/materialSlice';
 import userSlice from './features/userSlice';
 import bookingSlice from './features/bookingSlice';
+import searchSlice from './features/searchSlice';
+
 import {
   TypedUseSelectorHook,
   useDispatch,
@@ -10,7 +12,7 @@ import {
 } from 'react-redux';
 
 export const store = configureStore({
-  reducer: { MaterialSlice, userSlice, bookingSlice },
+  reducer: { MaterialSlice, userSlice, bookingSlice, searchSlice },
 });
 
 export type RootState = ReturnType<typeof store.getState>;

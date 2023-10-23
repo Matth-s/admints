@@ -15,6 +15,9 @@ export interface Booking {
   bookingDates: string[] | [];
   coachingPriceHour: number;
   coachingTime: number;
+  isCompleted: boolean;
+  downPayment: number;
+  timestamp: number;
 }
 
 export interface providedMaterialsBooking {

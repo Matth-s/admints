@@ -1,5 +1,6 @@
 button,
-input[type='submit'] {
+input[type='submit'],
+select {
   cursor: pointer;
 }
 
@@ -23,6 +24,7 @@ button {
   position: fixed;
   inset: 0;
   background-color: rgba($color: #000000, $alpha: 0.6);
+  z-index: 2;
 }
 
 .flex {

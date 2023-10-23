@@ -24,6 +24,15 @@
     }
   }
 
+  th:first-child {
+    text-align: left;
+    width: 300px;
+  }
+
+  th:not(:first-child) {
+    width: 80px;
+  }
+
   td:first-child {
     input {
       width: 300px;

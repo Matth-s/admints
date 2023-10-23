@@ -9,13 +9,12 @@ import Header from '../../components/header/Header';
 import MaterialNotFound from '../../components/materialNotFound/MaterialNotFound';
 import Loader from '../../components/loader/Loader';
 import ActionBar from '../../components/actionsBar/ActionBar';
-import Carousel from '../../components/carousel/Carousel';
+import Carousel from '../../components/materialCarousel/MaterialCarousel';
 import MaterialForm from '../../components/forms/material/MaterialForm';
 import MaterialInformation from '../../components/materialInformation/MaterialInformation';
 import ProvidedMaterial from '../../components/providedMaterial/ProvidedMaterial';
-import ViewCalendarButton from '../../components/buttons/viewCalendar/ViewCalendarButton';
 import CalendarModal from '../../components/modals/calendarModal/CalendarModal';
-import DeleteModal from '../../components/modals/deleteModal/DeleteModal';
+import DeleteMaterialModal from '../../components/modals/deleteMaterialModal/DeleteMaterialModal';
 
 import './style.scss';
 
@@ -84,7 +83,12 @@ const ViewMaterialPage = () => {
               />
             ) : (
               <>
-                <Carousel />
+                <Carousel
+                  arrayPicture={viewMaterial.arrayPicture}
+                  presentationPicture={
+                    viewMaterial.presentationPicture
+                  }
+                />
 
                 <div className="information-div flex">
                   <MaterialInformation material={viewMaterial} />
@@ -93,9 +97,12 @@ const ViewMaterialPage = () => {
                   />
                 </div>
 
-                <ViewCalendarButton
-                  openCalendar={() => setOpenCalendar(true)}
-                />
+                <button
+                  className="view-calendar"
+                  onClick={() => setOpenCalendar(() => true)}
+                >
+                  Afficher le calendrier
+                </button>
 
                 {openCalendar &&
                   createPortal(
@@ -108,7 +115,7 @@ const ViewMaterialPage = () => {
 
                 {openDelete &&
                   createPortal(
-                    <DeleteModal
+                    <DeleteMaterialModal
                       closeModal={() => setOpenDelete(false)}
                       id={viewMaterial.id}
                       name={viewMaterial.name}

@@ -18,22 +18,32 @@
   }
 
   aside {
-    height: 250px;
+    height: 270px;
     margin-bottom: 12px;
     overflow-x: scroll;
+    overflow-y: hidden;
     gap: 15px;
   }
 
   .thumbs-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     position: relative;
     width: 250px;
+    height: 250px;
     border: 1px solid grey;
   }
 
+  .image-main {
+    border: 1px solid orange;
+  }
+
   img {
-    max-width: 250px;
-    max-height: 250px;
+    max-width: 200px;
+    max-height: 200px;
     object-fit: cover;
+    cursor: pointer;
   }
 
   button {

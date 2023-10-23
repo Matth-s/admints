@@ -24,8 +24,6 @@ const MaterialBooking = ({
   ) => {
     const { value, name } = e.target;
 
-    console.log(name);
-
     setFormData((prev) => {
       return {
         ...prev,
@@ -100,7 +98,7 @@ const MaterialBooking = ({
             <th>Quantité</th>
             <th>Prix</th>
             <th>Total</th>
-            <th>Delete</th>
+            <th></th>
           </tr>
         </thead>
         <tbody>
@@ -141,7 +139,6 @@ const MaterialBooking = ({
                     name="total"
                     disabled
                     value={item.total}
-                    defaultValue={item.total}
                   />
                 </td>
                 <td>
@@ -154,7 +151,7 @@ const MaterialBooking = ({
         </tbody>
       </table>
       <button onClick={() => handleAddMaterial()}>
-        Ajouter une ligne
+        Ajouter un matériel
       </button>
     </div>
   );

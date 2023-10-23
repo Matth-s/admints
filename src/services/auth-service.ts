@@ -14,6 +14,10 @@ import {
   setIsAuthenticated,
   setToken,
 } from '../store/features/userSlice';
+import {
+  setBooking,
+  setViewBooking,
+} from '../store/features/bookingSlice';
 
 export const signUpService = createAsyncThunk(
   'signUp',
@@ -74,6 +78,7 @@ export const logOutService = createAsyncThunk(
 
       dispatch(setToken(''));
       dispatch(setIsAuthenticated(false));
+      dispatch(setBooking([]));
     } catch (error) {
       return error;
     }

@@ -15,6 +15,7 @@ import Loader from './components/loader/Loader';
 import BookingPage from './pages/booking/BookingPage';
 import { getAllBookingService } from './services/booking-service';
 import CreateBookingPage from './pages/createBooking/CreateBookingPage';
+import ViewBookingPage from './pages/viewBooking/ViewBookingPage';
 
 function App() {
   const dispatch = useAppDispatch();
@@ -26,19 +27,18 @@ function App() {
   const { token } = useAppSelector((state) => state.userSlice);
 
   const checkUser = async () => {
-    try {
-      await dispatch(checkUserStatusService());
-    } catch (error) {
-    } finally {
-      setIsLoading(false);
-    }
+    await dispatch(checkUserStatusService())
+      .unwrap()
+      .then()
+      .catch((error) => console.log(error, 'checkuser error'))
+      .finally(() => setIsLoading(false));
   };
 
   const getMaterial = async () => {
     await dispatch(getAllMaterialService())
       .unwrap()
       .then()
-      .catch((error) => console.log(error))
+      .catch((error) => console.log(error, 'matérial error'))
       .finally(() => setIsMaterialLoading(false));
   };
 
@@ -46,7 +46,7 @@ function App() {
     await dispatch(getAllBookingService({ token }))
       .unwrap()
       .then()
-      .catch((error) => console.log(error))
+      .catch((error) => console.log(error, 'bookingError'))
       .finally(() => setBookingLoading(false));
   };
 
@@ -86,11 +86,22 @@ function App() {
                 path="/create-booking/:id"
                 element={<CreateBookingPage />}
               />
+              <Route
+                path="/view-booking/:id"
+                element={<ViewBookingPage />}
+              />
+              <Route
+                path="/"
+                element={<Home isLoading={materialLoading} />}
+              />
             </Route>
 
-            <Route path="/" element={<Navigate to="/home" />} />
+            <Route
+              path="/material"
+              element={<Navigate to="/home" />}
+            />
+
             <Route path="/signup" element={<SignUp />} />
-            <Route path="*" element={<Navigate to="/signup" />} />
           </Routes>
         </>
       )}

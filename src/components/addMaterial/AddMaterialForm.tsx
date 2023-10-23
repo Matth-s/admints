@@ -5,7 +5,6 @@ import {
   providedMaterials,
 } from '../../schema/material-schema';
 
-import AddMaterialButton from '../buttons/addMaterialButton/AddMaterialButton';
 import ProvidedMaterialRowForm from '../providedMaterialForm/ProvidedMaterialForm';
 import DeleteProvidedMaterialButton from '../buttons/deleteProvidedMaterial/DeleteProvidedMaterialButton';
 
@@ -96,7 +95,9 @@ const AddMaterialForm = ({
           </div>
         ))}
 
-      <AddMaterialButton handleAddMaterial={handleAddMaterial} />
+      <span onClick={() => handleAddMaterial()}>
+        Ajouter un matriel
+      </span>
     </div>
   );
 };

@@ -2,14 +2,18 @@ import React from 'react';
 
 type Props = {
   closeModal: () => void;
+  isLoading: boolean;
 };
 
-const CancelButton = ({ closeModal }: Props) => {
-  const handleCancel = () => {
-    closeModal();
-  };
-
-  return <button onClick={() => handleCancel()}>Annuler</button>;
+const CancelButton = ({ closeModal, isLoading }: Props) => {
+  return (
+    <button
+      className={isLoading ? 'isLoading' : ''}
+      onClick={() => closeModal()}
+    >
+      Annuler
+    </button>
+  );
 };
 
 export default CancelButton;

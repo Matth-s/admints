@@ -1,9 +1,13 @@
-import React from 'react';
+import { useMemo } from 'react';
 
 import Header from '../../components/header/Header';
 import Loader from '../../components/loader/Loader';
-import './style.scss';
+import BookingCard from '../../components/bookingCard/BookingCard';
+
 import { useAppSelector } from '../../store/store';
+
+import './style.scss';
+import SearchBarBooking from '../../components/searchBarBooking/SearchBarBooking';
 
 type Props = {
   isLoading: boolean;
@@ -11,6 +15,40 @@ type Props = {
 
 const BookingPage = ({ isLoading }: Props) => {
   const { booking } = useAppSelector((state) => state.bookingSlice);
+  const { searchBooking, searchChoice } = useAppSelector(
+    (state) => state.searchSlice
+  );
+
+  const bookingMemo = useMemo(() => {
+    switch (searchChoice) {
+      case 'materialName':
+        return booking.filter((item) =>
+          item.materialName.toLowerCase().includes(searchBooking)
+        );
+      case 'firstName':
+        return booking.filter((item) =>
+          item.firstName.toLowerCase().startsWith(searchBooking)
+        );
+      case 'lastName':
+        return booking.filter((item) =>
+          item.lastName.toLowerCase().startsWith(searchBooking)
+        );
+      case 'paid':
+        return booking.filter((item) => item.isCompleted === true);
+      case 'notPaid':
+        return booking.filter((item) => item.isCompleted === false);
+      case 'hightToLow':
+        return booking.slice().sort((a, b) => a.total - b.total);
+      case 'lowToHight':
+        return booking.slice().sort((a, b) => b.total - a.total);
+      default:
+        return booking.length > 0
+          ? booking.slice().sort((a, b) => b.timestamp - a.timestamp)
+          : booking;
+    }
+  }, [booking, searchChoice, searchBooking]);
+
+  console.log(bookingMemo);
 
   if (isLoading) {
     return (
@@ -24,8 +62,33 @@ const BookingPage = ({ isLoading }: Props) => {
   return (
     <div className="booking-page-container">
       <Header />
-      <div className="booking-content"></div>
-      bookingpage
+      <div className="booking-content">
+        <SearchBarBooking />
+        {bookingMemo.length > 0 ? (
+          <table>
+            <thead>
+              <tr>
+                <th>Date de début</th>
+                <th>Date de fin</th>
+                <th>Matériel</th>
+                <th>Nom</th>
+                <th>Prenom</th>
+                <th>Total</th>
+                <th>Status</th>
+                <th></th>
+              </tr>
+            </thead>
+
+            <tbody>
+              {bookingMemo.map((item) => (
+                <BookingCard key={item.id} booking={item} />
+              ))}
+            </tbody>
+          </table>
+        ) : (
+          <h3>Aucune réservation</h3>
+        )}
+      </div>
     </div>
   );
 };
