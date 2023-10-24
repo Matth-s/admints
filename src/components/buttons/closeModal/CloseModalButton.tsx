@@ -1,5 +1,3 @@
-import React from 'react';
-
 import iconCross from '../../../assets/icon-cross.svg';
 
 import './style.scss';

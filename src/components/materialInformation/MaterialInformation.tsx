@@ -1,4 +1,3 @@
-import React from 'react';
 import { Material } from '../../schema/material-schema';
 
 import './style.scss';

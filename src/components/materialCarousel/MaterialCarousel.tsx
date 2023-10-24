@@ -10,10 +10,7 @@ type Props = {
   presentationPicture: string;
 };
 
-const MaterialCarousel = ({
-  arrayPicture,
-  presentationPicture,
-}: Props) => {
+const MaterialCarousel = ({ arrayPicture }: Props) => {
   return (
     <Carousel>
       {arrayPicture.map((item, index) => (

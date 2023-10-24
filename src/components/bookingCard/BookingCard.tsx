@@ -1,8 +1,4 @@
-import React from 'react';
-
-import iconArrowRight from '../../assets/icon-arrow-right.svg';
-
-import { NavLink, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import { Booking } from '../../schema/booking-schema';
 

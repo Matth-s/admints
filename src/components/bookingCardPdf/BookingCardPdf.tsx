@@ -1,6 +1,4 @@
-import React from 'react';
 import {
-  Image,
   Text,
   View,
   Page,
@@ -153,24 +151,27 @@ const BookingCardPdf = ({ receiptData }: Props) => {
 
   const TableBody = () =>
     receiptData.providedMaterialsBooking.length > 0 ? (
-      receiptData.providedMaterialsBooking.map((item) => (
-        <View key={item.id}>
-          <View style={{ width: '100%', flexDirection: 'row' }}>
-            <View style={[styles.tbody, styles.tbody2]}>
-              <Text>{item.materialName}</Text>
+      receiptData.providedMaterialsBooking.map(
+        (item) =>
+          item.quantity > 0 && (
+            <View key={item.id}>
+              <View style={{ width: '100%', flexDirection: 'row' }}>
+                <View style={[styles.tbody, styles.tbody2]}>
+                  <Text>{item.materialName}</Text>
+                </View>
+                <View style={styles.tbody}>
+                  <Text>{item.price.toFixed(2)} </Text>
+                </View>
+                <View style={styles.tbody}>
+                  <Text>{item.quantity}</Text>
+                </View>
+                <View style={styles.tbody}>
+                  <Text>{item.total.toFixed(2)}</Text>
+                </View>
+              </View>
             </View>
-            <View style={styles.tbody}>
-              <Text>{item.price.toFixed(2)} </Text>
-            </View>
-            <View style={styles.tbody}>
-              <Text>{item.quantity}</Text>
-            </View>
-            <View style={styles.tbody}>
-              <Text>{item.total.toFixed(2)}</Text>
-            </View>
-          </View>
-        </View>
-      ))
+          )
+      )
     ) : (
       <View></View>
     );
@@ -197,24 +198,27 @@ const BookingCardPdf = ({ receiptData }: Props) => {
         </View>
       </View>
 
-      <View style={{ width: '100%', flexDirection: 'row' }}>
-        <View style={[styles.tbody, styles.tbody2]}>
-          <Text>Coaching</Text>
+      {receiptData.coachingTime > 0 && (
+        <View style={{ width: '100%', flexDirection: 'row' }}>
+          <View style={[styles.tbody, styles.tbody2]}>
+            <Text>Coaching</Text>
+          </View>
+          <View style={styles.tbody}>
+            <Text>{receiptData.coachingPriceHour.toFixed(2)}</Text>
+          </View>
+          <View style={styles.tbody}>
+            <Text>{receiptData.coachingTime}</Text>
+          </View>
+          <View style={styles.tbody}>
+            <Text>
+              {(
+                receiptData.coachingPriceHour *
+                receiptData.coachingTime
+              ).toFixed(2)}
+            </Text>
+          </View>
         </View>
-        <View style={styles.tbody}>
-          <Text>{receiptData.coachingPriceHour.toFixed(2)}</Text>
-        </View>
-        <View style={styles.tbody}>
-          <Text>{receiptData.coachingTime}</Text>
-        </View>
-        <View style={styles.tbody}>
-          <Text>
-            {(
-              receiptData.coachingPriceHour * receiptData.coachingTime
-            ).toFixed(2)}
-          </Text>
-        </View>
-      </View>
+      )}
 
       <View style={{ width: '100%', flexDirection: 'row' }}>
         <View style={[styles.tbody, styles.tbody2]}>

@@ -1,4 +1,4 @@
-import { useAppDispatch } from '../../store/store';
+import { useAppDispatch, useAppSelector } from '../../store/store';
 import {
   setSearchBooking,
   setSearchChoice,
@@ -8,6 +8,9 @@ import './style.scss';
 
 const SearchBarBooking = () => {
   const dispatch = useAppDispatch();
+  const { searchChoice, searchBooking } = useAppSelector(
+    (state) => state.searchSlice
+  );
 
   const handleChangeSearch = (value: string) => {
     dispatch(setSearchBooking(value.toLocaleLowerCase().trim()));
@@ -20,7 +23,10 @@ const SearchBarBooking = () => {
   return (
     <div className="search-bar-booking-container flex flex__alignCenter flex__spaceBetween">
       <h2>Filtrer par: </h2>
-      <select onChange={(e) => handleChangeSelect(e.target.value)}>
+      <select
+        onChange={(e) => handleChangeSelect(e.target.value)}
+        defaultValue={searchChoice}
+      >
         <option value="">Aucun</option>
         <option value="materialName">Nom du matériel</option>
         <option value="firstName">Prénom</option>
@@ -36,6 +42,7 @@ const SearchBarBooking = () => {
       <input
         type="text"
         onChange={(e) => handleChangeSearch(e.target.value)}
+        defaultValue={searchBooking}
         placeholder="Recherche"
       />
     </div>

@@ -14,10 +14,7 @@ import {
   setIsAuthenticated,
   setToken,
 } from '../store/features/userSlice';
-import {
-  setBooking,
-  setViewBooking,
-} from '../store/features/bookingSlice';
+import { setBooking } from '../store/features/bookingSlice';
 
 export const signUpService = createAsyncThunk(
   'signUp',
@@ -50,7 +47,7 @@ export const checkUserStatusService = createAsyncThunk(
     try {
       const auth = getAuth();
 
-      return new Promise<void>((resolve, reject) => {
+      return new Promise<void>((resolve) => {
         onAuthStateChanged(auth, (user) => {
           if (user) {
             const { accessToken } = <any>user;

@@ -5,6 +5,7 @@ type Props = {
   setIsditing: React.Dispatch<React.SetStateAction<boolean>>;
   setOpenModalPdf: React.Dispatch<React.SetStateAction<boolean>>;
   handleMarkAsPaid: () => void;
+  isPaid: boolean;
 };
 
 const ActionBooking = ({
@@ -12,10 +13,14 @@ const ActionBooking = ({
   setIsditing,
   setOpenModalPdf,
   handleMarkAsPaid,
+  isPaid,
 }: Props) => {
   return (
     <div className="action-booking-container flex">
-      <button onClick={handleMarkAsPaid}>Marquer comme payé</button>
+      {!isPaid && (
+        <button onClick={handleMarkAsPaid}>Marquer comme payé</button>
+      )}
+
       <button onClick={() => setIsditing((prev) => !prev)}>
         Modifier
       </button>

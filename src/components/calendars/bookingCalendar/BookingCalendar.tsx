@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { DateRangePicker } from 'react-date-range';
-import { eachDayOfInterval, format, parse, addDays } from 'date-fns';
+import { eachDayOfInterval, format } from 'date-fns';
 
 import { Booking } from '../../../schema/booking-schema';
 

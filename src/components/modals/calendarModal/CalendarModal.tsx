@@ -1,5 +1,3 @@
-import React from 'react';
-
 import CloseModalButton from '../../buttons/closeModal/CloseModalButton';
 import ViewCalendar from '../../calendars/viewCalendar/ViewCalendar';
 

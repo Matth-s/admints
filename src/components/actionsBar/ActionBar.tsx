@@ -7,6 +7,10 @@ import { useNavigate } from 'react-router-dom';
 import { Material } from '../../schema/material-schema';
 
 import './style.scss';
+import {
+  setSearchBooking,
+  setSearchChoice,
+} from '../../store/features/searchSlice';
 
 type Props = {
   setIsEditing: React.Dispatch<React.SetStateAction<boolean>>;
@@ -59,6 +63,13 @@ const ActionBar = ({
     dispatch(setCreateBooking(materialToBooking));
     navigate(`/create-booking/${material.id}`);
   };
+
+  const handleGoViewBooking = () => {
+    dispatch(setSearchChoice('materialName'));
+    dispatch(setSearchBooking(material.name.toLowerCase()));
+    navigate('/booking');
+  };
+
   return (
     <div className="action-bar flex">
       <button onClick={() => setIsEditing((prev) => !prev)}>
@@ -67,6 +78,10 @@ const ActionBar = ({
 
       <button onClick={() => handleAddBooking()}>
         Ajouter une réservation
+      </button>
+
+      <button onClick={() => handleGoViewBooking()}>
+        Aller aux reservations concernant ce matériel
       </button>
 
       <button onClick={() => setOpenDelete(true)}>Supprimer</button>

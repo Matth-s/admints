@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 
 import { useAppDispatch, useAppSelector } from '../../store/store';
+import { toast } from 'react-toastify';
 
 import {
   getBookingById,
@@ -19,8 +20,10 @@ import ActionBooking from '../../components/actionBooking/ActionBooking';
 import DeleteBookingModal from '../../components/modals/deleteBookingModal/DeleteBookingModal';
 import ViewPdfModal from '../../components/modals/viewPdfModal/ViewPdfModal';
 import BookingForm from '../../components/forms/booking/BookingForm';
+import BookingInformation from '../../components/bookingInformartion/BookingInformation';
 
 import './style.scss';
+import 'react-toastify/dist/ReactToastify.css';
 
 const ViewBookingPage = () => {
   const { id } = useParams();
@@ -63,7 +66,37 @@ const ViewBookingPage = () => {
     if (viewBooking) {
       dispatch(
         markAsPaidService({ id: viewBooking.id as string, token })
-      );
+      )
+        .unwrap()
+        .then((res: number) => {
+          if (res === 200) {
+            toast.success('Réservation marqué comme payé', {
+              position: 'bottom-center',
+              autoClose: 5000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: 'light',
+            });
+          }
+        })
+        .catch(() => {
+          toast.error(
+            'Une erreur est survenue lors de la mise a jour',
+            {
+              position: 'bottom-center',
+              autoClose: 5000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: 'light',
+            }
+          );
+        });
     }
   };
 
@@ -101,6 +134,7 @@ const ViewBookingPage = () => {
               setIsditing={setIsditing}
               setOpenModalPdf={setOpenModalPdf}
               handleMarkAsPaid={handleMarkAsPaid}
+              isPaid={viewBooking.isCompleted}
             />
 
             {isEditing ? (
@@ -115,7 +149,7 @@ const ViewBookingPage = () => {
               )
             ) : (
               <>
-                <p>{viewBooking.city}</p>
+                <BookingInformation booking={viewBooking} />
 
                 {openModalDelete &&
                   createPortal(

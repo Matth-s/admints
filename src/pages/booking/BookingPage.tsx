@@ -3,11 +3,11 @@ import { useMemo } from 'react';
 import Header from '../../components/header/Header';
 import Loader from '../../components/loader/Loader';
 import BookingCard from '../../components/bookingCard/BookingCard';
+import SearchBarBooking from '../../components/searchBarBooking/SearchBarBooking';
 
 import { useAppSelector } from '../../store/store';
 
 import './style.scss';
-import SearchBarBooking from '../../components/searchBarBooking/SearchBarBooking';
 
 type Props = {
   isLoading: boolean;
@@ -48,8 +48,6 @@ const BookingPage = ({ isLoading }: Props) => {
     }
   }, [booking, searchChoice, searchBooking]);
 
-  console.log(bookingMemo);
-
   if (isLoading) {
     return (
       <>
@@ -64,6 +62,25 @@ const BookingPage = ({ isLoading }: Props) => {
       <Header />
       <div className="booking-content">
         <SearchBarBooking />
+
+        {(searchChoice !== '' && searchChoice === 'paid') ||
+        searchChoice === 'notPaid' ||
+        searchChoice === 'hightToLow' ||
+        searchChoice === 'lowToHight' ? (
+          <h2>
+            {bookingMemo.length} résultat
+            {bookingMemo.length > 1 ? 's' : ''} pour {searchChoice}
+          </h2>
+        ) : (
+          searchBooking !== '' && (
+            <h2>
+              {bookingMemo.length} résultat
+              {bookingMemo.length > 1 ? 's' : ''} pour '
+              {searchBooking}'
+            </h2>
+          )
+        )}
+
         {bookingMemo.length > 0 ? (
           <table>
             <thead>

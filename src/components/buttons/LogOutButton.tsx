@@ -1,4 +1,3 @@
-import React from 'react';
 import { useAppDispatch } from '../../store/store';
 import { logOutService } from '../../services/auth-service';
 

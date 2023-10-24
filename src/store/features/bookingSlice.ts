@@ -64,7 +64,6 @@ export const bookingSlice = createSlice({
     },
     setUpdateBooking: (state, action: PayloadAction<Booking>) => {
       const { payload } = action;
-      console.log(payload);
       state.viewBooking = payload;
 
       const newMaterial = state.booking.map((item) => {
@@ -77,6 +76,28 @@ export const bookingSlice = createSlice({
 
       state.booking = newMaterial;
     },
+    setMarkAsPaid: (state, action: PayloadAction<string>) => {
+      const { payload } = action; // booking id;
+
+      if (state.viewBooking) {
+        state.viewBooking = {
+          ...state.viewBooking,
+          isCompleted: true,
+        };
+      }
+
+      const bookingUpdate = state.booking.map((item) => {
+        if (item.id === payload) {
+          return {
+            ...item,
+            isCompleted: true,
+          };
+        }
+        return item;
+      });
+
+      state.booking = bookingUpdate;
+    },
   },
 });
 
@@ -88,6 +109,7 @@ export const {
   deleteBooking,
   setUnavailableDates,
   setUpdateBooking,
+  setMarkAsPaid,
 } = bookingSlice.actions;
 
 export default bookingSlice.reducer;

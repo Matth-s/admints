@@ -4,16 +4,16 @@ import { useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from './store/store';
 import { checkUserStatusService } from './services/auth-service';
 import { getAllMaterialService } from './services/material-service';
+import { getAllBookingService } from './services/booking-service';
+import { ToastContainer } from 'react-toastify';
 
 import PrivateRoute from './utils/PrivateRoutes';
 import SignUp from './pages/signUp/SignUpPage';
 import Home from './pages/home/Home';
 import CreateMaterialPage from './pages/createMaterial/CreateMaterialPage';
 import ViewMaterialPage from './pages/viewMaterial/ViewMaterialPage';
-
 import Loader from './components/loader/Loader';
 import BookingPage from './pages/booking/BookingPage';
-import { getAllBookingService } from './services/booking-service';
 import CreateBookingPage from './pages/createBooking/CreateBookingPage';
 import ViewBookingPage from './pages/viewBooking/ViewBookingPage';
 
@@ -90,10 +90,7 @@ function App() {
                 path="/view-booking/:id"
                 element={<ViewBookingPage />}
               />
-              <Route
-                path="/"
-                element={<Home isLoading={materialLoading} />}
-              />
+              <Route path="/" element={<Navigate to="/material" />} />
             </Route>
 
             <Route
@@ -103,6 +100,7 @@ function App() {
 
             <Route path="/signup" element={<SignUp />} />
           </Routes>
+          <ToastContainer />
         </>
       )}
     </>

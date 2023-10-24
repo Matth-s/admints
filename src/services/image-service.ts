@@ -34,10 +34,8 @@ export const updateImageService = createAsyncThunk(
       images,
       idMaterial,
     }: { images: arrayPicture[] | []; idMaterial: string },
-    { dispatch }
+    {}
   ) => {
-    console.log(images);
-
     try {
       const folderRef = ref(storage, `material/${idMaterial}/`);
       const items = await list(folderRef);

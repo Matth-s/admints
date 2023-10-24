@@ -6,6 +6,7 @@ import {
   addBooking,
   deleteBooking,
   setBooking,
+  setMarkAsPaid,
   setUnavailableDates,
   setUpdateBooking,
   setViewBooking,
@@ -48,7 +49,7 @@ export const getBookingById = createAsyncThunk(
     { dispatch }
   ) => {
     try {
-      const { data, status } = await axios.get<Booking>(
+      const { data } = await axios.get<Booking>(
         `${urlLocal}/booking/${id}`,
         {
           headers: {
@@ -186,6 +187,23 @@ export const markAsPaidService = createAsyncThunk(
     { id, token }: { id: string; token: string },
     { dispatch }
   ) => {
-    console.log(token);
+    try {
+      const { status } = await axios.put<null>(
+        `${urlLocal}/booking/markAsPaid/${id}`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json',
+          },
+        }
+      );
+
+      dispatch(setMarkAsPaid(id));
+
+      return status;
+    } catch (error) {
+      throw error;
+    }
   }
 );
