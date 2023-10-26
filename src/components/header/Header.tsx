@@ -14,6 +14,7 @@ const Header = () => {
             Ajouter une annonce
           </NavLink>
           <NavLink to="/booking">Réservation</NavLink>
+          <NavLink to="/messaging">Messagerie</NavLink>
         </ul>
       </nav>
 

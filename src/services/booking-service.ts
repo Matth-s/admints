@@ -18,6 +18,8 @@ import {
 } from '../store/features/materialSlice';
 import { Material } from '../schema/material-schema';
 
+import { tokenApp } from '../firebaseConf';
+
 const urlLocal = 'http://localhost:3000/api';
 
 export const getAllBookingService = createAsyncThunk(
@@ -29,6 +31,7 @@ export const getAllBookingService = createAsyncThunk(
         {
           headers: {
             Authorization: `Bearer ${token}`,
+            'X-Firebase-AppCheck': tokenApp,
             'Content-Type': 'application/json',
           },
         }

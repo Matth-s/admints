@@ -10,6 +10,8 @@ import {
   setViewMaterial,
 } from '../store/features/materialSlice';
 
+import { tokenApp } from '../firebaseConf';
+
 const urlLocal = 'http://localhost:3000/api';
 
 export const getAllMaterialService = createAsyncThunk(
@@ -20,7 +22,7 @@ export const getAllMaterialService = createAsyncThunk(
         `${urlLocal}/material`,
         {
           headers: {
-            'Content-Type': 'application/json',
+            'X-Firebase-AppCheck': tokenApp,
           },
         }
       );

@@ -81,30 +81,34 @@ const BookingPage = ({ isLoading }: Props) => {
           )
         )}
 
-        {bookingMemo.length > 0 ? (
-          <table>
-            <thead>
-              <tr>
-                <th>Date de début</th>
-                <th>Date de fin</th>
-                <th>Matériel</th>
-                <th>Nom</th>
-                <th>Prenom</th>
-                <th>Total</th>
-                <th>Status</th>
-                <th></th>
-              </tr>
-            </thead>
+        <table>
+          <thead>
+            <tr>
+              <th>Date de début</th>
+              <th>Date de fin</th>
+              <th>Matériel</th>
+              <th>Nom</th>
+              <th>Prenom</th>
+              <th>Total</th>
+              <th>Status</th>
+              <th></th>
+            </tr>
+          </thead>
 
-            <tbody>
-              {bookingMemo.map((item) => (
+          <tbody>
+            {bookingMemo.length > 0 ? (
+              bookingMemo.map((item) => (
                 <BookingCard key={item.id} booking={item} />
-              ))}
-            </tbody>
-          </table>
-        ) : (
-          <h3>Aucune réservation</h3>
-        )}
+              ))
+            ) : (
+              <tr className="empty-tr">
+                <td className="absolute absolute__center">
+                  Aucune réservation
+                </td>
+              </tr>
+            )}
+          </tbody>
+        </table>
       </div>
     </div>
   );
