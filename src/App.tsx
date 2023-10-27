@@ -24,8 +24,8 @@ function App() {
   const [materialLoading, setIsMaterialLoading] =
     useState<boolean>(true);
   const [bookingLoading, setBookingLoading] = useState<boolean>(true);
-  const [messaginLoading, setMessagingLoading] =
-    useState<boolean>(true);
+  /* const [messaginLoading, setMessagingLoading] =
+    useState<boolean>(true);*/
 
   const { token } = useAppSelector((state) => state.userSlice);
 
@@ -53,9 +53,9 @@ function App() {
       .finally(() => setBookingLoading(false));
   };
 
-  const getMessaging = async () => {
+  /* const getMessaging = async () => {
     //dispatch().unwrap().then().catch().finally(() => setMessagingLoading(false))
-  };
+  };*/
 
   useEffect(() => {
     checkUser();
@@ -100,12 +100,7 @@ function App() {
               />
               <Route path="/" element={<Navigate to="/material" />} />
 
-              <Route
-                path="/messaging"
-                element={
-                  <MessagingPage isLoading={messaginLoading} />
-                }
-              />
+              <Route path="/messaging" element={<MessagingPage />} />
             </Route>
 
             <Route

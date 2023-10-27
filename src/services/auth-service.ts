@@ -51,7 +51,6 @@ export const checkUserStatusService = createAsyncThunk(
         onAuthStateChanged(auth, (user) => {
           if (user) {
             const { accessToken } = <any>user;
-            console.log(accessToken);
             dispatch(setIsAuthenticated(true));
             dispatch(setToken(accessToken));
             resolve();

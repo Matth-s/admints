@@ -5,11 +5,11 @@ import { useNavigate } from 'react-router-dom';
 import Header from '../../components/header/Header';
 import Loader from '../../components/loader/Loader';
 import MaterialCard from '../../components/materialCard/MaterialCard';
+import SearchBarHome from '../../components/searchBarHome/SearchBarHome';
 
 import { useAppSelector } from '../../store/store';
 
 import './style.scss';
-import SearchBarHome from '../../components/searchBarHome/SearchBarHome';
 
 type Props = {
   isLoading: boolean;
@@ -64,7 +64,6 @@ const Home = ({ isLoading }: Props) => {
                 {searchMaterial}"
               </h2>
             )}
-            <h2>{}</h2>
             {materialMemo.map((item) => (
               <MaterialCard key={item.id} material={item} />
             ))}

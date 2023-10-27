@@ -31,7 +31,7 @@ export const getAllBookingService = createAsyncThunk(
         {
           headers: {
             Authorization: `Bearer ${token}`,
-            'X-Firebase-AppCheck': tokenApp,
+            'x-firebase-appcheck': `${tokenApp}`,
             'Content-Type': 'application/json',
           },
         }
@@ -56,6 +56,7 @@ export const getBookingById = createAsyncThunk(
         `${urlLocal}/booking/${id}`,
         {
           headers: {
+            'x-firebase-appcheck': `${tokenApp}`,
             Authorization: `Bearer ${token}`,
           },
         }
@@ -74,8 +75,6 @@ export const createBookingService = createAsyncThunk(
     { booking, token }: { booking: Booking; token: string },
     { dispatch }
   ) => {
-    console.log(booking);
-
     try {
       const { data, status } = await axios.post<Booking>(
         `${urlLocal}/booking`,
@@ -83,6 +82,7 @@ export const createBookingService = createAsyncThunk(
         {
           headers: {
             Authorization: `Bearer ${token}`,
+            'x-firebase-appcheck': `${tokenApp}`,
           },
         }
       );
@@ -114,6 +114,7 @@ export const deleteBookingByIdService = createAsyncThunk(
         {
           headers: {
             Authorization: `Bearer ${token}`,
+            'x-firebase-appcheck': `${tokenApp}`,
             'Content-Type': 'application/json',
           },
         }
@@ -143,6 +144,7 @@ export const getUnavailableDatesService = createAsyncThunk(
         {
           headers: {
             Authorization: `Bearer ${token}`,
+            'x-firebase-appcheck': `${tokenApp}`,
             'Content-Type': 'application/json',
           },
         }
@@ -168,6 +170,7 @@ export const updateBookingService = createAsyncThunk(
       }>(`${urlLocal}/booking/${booking.id}`, booking, {
         headers: {
           Authorization: `Bearer ${token}`,
+          'x-firebase-appcheck': `${tokenApp}`,
           'Content-Type': 'application/json',
         },
       });
@@ -197,6 +200,7 @@ export const markAsPaidService = createAsyncThunk(
         {
           headers: {
             Authorization: `Bearer ${token}`,
+            'x-firebase-appcheck': `${tokenApp}`,
             'Content-Type': 'application/json',
           },
         }

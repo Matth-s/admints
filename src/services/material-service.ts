@@ -9,7 +9,6 @@ import {
   setUpdateMaterial,
   setViewMaterial,
 } from '../store/features/materialSlice';
-
 import { tokenApp } from '../firebaseConf';
 
 const urlLocal = 'http://localhost:3000/api';
@@ -22,7 +21,8 @@ export const getAllMaterialService = createAsyncThunk(
         `${urlLocal}/material`,
         {
           headers: {
-            'X-Firebase-AppCheck': tokenApp,
+            ' x-firebase-appcheck': `${tokenApp}`,
+            'Content-Type': 'application/json',
           },
         }
       );
@@ -40,7 +40,12 @@ export const getMaterialByIdService = createAsyncThunk(
   async ({ id }: { id: string }, { dispatch }) => {
     try {
       const { data } = await axios.get<Material>(
-        `${urlLocal}/material/${id}`
+        `${urlLocal}/material/${id}`,
+        {
+          headers: {
+            ' x-firebase-appcheck': `${tokenApp}`,
+          },
+        }
       );
 
       dispatch(setViewMaterial(data));
@@ -67,6 +72,7 @@ export const updateMaterialService = createAsyncThunk(
         {
           headers: {
             Authorization: `Bearer ${token}`,
+            'x-firebase-appcheck': `${tokenApp}`,
             'Content-Type': 'application/json',
           },
         }
@@ -93,6 +99,7 @@ export const createMaterialService = createAsyncThunk(
         material,
         {
           headers: {
+            'x-firebase-appcheck': `${tokenApp}`,
             Authorization: `Bearer ${token}`,
             'Content-Type': 'application/json',
           },
@@ -120,6 +127,7 @@ export const deleteMaterielByIdService = createAsyncThunk(
         {
           headers: {
             Authorization: `Bearer ${token}`,
+            'x-firebase-appcheck': `${tokenApp}`,
           },
         }
       );

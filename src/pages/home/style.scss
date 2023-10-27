@@ -3,6 +3,18 @@
     margin: 40px auto 0;
     width: 1100px;
     height: auto;
-    border: 1px solid red;
+
+    h2 {
+      text-align: center;
+      margin: 30px;
+    }
+  }
+}
+
+@media screen and (max-width: 1200px) {
+  .home-container {
+    .home-content {
+      width: 90%;
+    }
   }
 }

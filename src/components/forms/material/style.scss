@@ -1,9 +1,10 @@
 .material-form {
-  border: 1px solid green;
   padding: 40px;
   width: 500px;
   height: auto;
   margin: auto;
+  border: 1px solid grey;
+  border-radius: 10px;
 
   span {
     display: block;
@@ -36,5 +37,17 @@
       width: 20px;
       height: 20px;
     }
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .material-form {
+    width: 90%;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .material-form {
+    padding: 20px;
   }
 }

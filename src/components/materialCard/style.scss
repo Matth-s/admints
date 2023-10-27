@@ -1,19 +1,19 @@
 .material-card-article {
   width: 100%;
   height: 250px;
-  border: 1px solid blue;
   padding-right: 40px;
   margin-bottom: 20px;
+  border: 1px solid grey;
+  border-radius: 10px;
+  overflow: hidden;
 
   img {
     width: 250px;
-    height: 250px;
+    height: 240px;
     object-fit: contain;
-    border: 1px solid red;
   }
 
   div {
-    border: 1px solid orange;
     width: 500px;
     height: auto;
     max-height: 400px;
@@ -22,5 +22,44 @@
 
   h3 {
     margin-bottom: 20px;
+  }
+}
+
+@media screen and (max-width: 1050px) {
+  .material-card-article {
+    div {
+      width: 400px;
+    }
+  }
+}
+
+@media screen and (max-width: 895px) {
+  .material-card-article {
+    height: auto;
+    flex-direction: column;
+    padding: 10px;
+
+    div {
+      width: 80%;
+      margin-bottom: 30px;
+    }
+
+    h3,
+    p {
+      text-align: center;
+    }
+
+    img {
+      margin-bottom: 30px;
+    }
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .material-card-article {
+    img {
+      width: 150px;
+      height: 150px;
+    }
   }
 }
