@@ -9,7 +9,10 @@ import {
   setUpdateMaterial,
   setViewMaterial,
 } from '../store/features/materialSlice';
-import { tokenApp } from '../firebaseConf';
+
+import { getToken } from 'firebase/app-check';
+
+import { appCheck } from '../firebaseConf';
 
 const urlLocal = 'http://localhost:3000/api';
 
@@ -17,6 +20,7 @@ export const getAllMaterialService = createAsyncThunk(
   'getAllMaterial',
   async (_, { dispatch }) => {
     try {
+      const tokenApp = (await getToken(appCheck)).token;
       const { data, status } = await axios.get<Material[]>(
         `${urlLocal}/material`,
         {
@@ -39,6 +43,7 @@ export const getMaterialByIdService = createAsyncThunk(
   'getMaterialById',
   async ({ id }: { id: string }, { dispatch }) => {
     try {
+      const tokenApp = (await getToken(appCheck)).token;
       const { data } = await axios.get<Material>(
         `${urlLocal}/material/${id}`,
         {
@@ -66,6 +71,7 @@ export const updateMaterialService = createAsyncThunk(
     { dispatch }
   ) => {
     try {
+      const tokenApp = (await getToken(appCheck)).token;
       const { data, status } = await axios.put<Material>(
         `${urlLocal}/material/${id}`,
         material,
@@ -94,6 +100,7 @@ export const createMaterialService = createAsyncThunk(
     { dispatch }
   ) => {
     try {
+      const tokenApp = (await getToken(appCheck)).token;
       const { data, status } = await axios.post<Material>(
         `${urlLocal}/material`,
         material,
@@ -122,6 +129,7 @@ export const deleteMaterielByIdService = createAsyncThunk(
     { dispatch }
   ) => {
     try {
+      const tokenApp = (await getToken(appCheck)).token;
       const { status } = await axios.delete(
         `${urlLocal}/material/${id}`,
         {

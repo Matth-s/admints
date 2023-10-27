@@ -16,9 +16,11 @@ import {
   setDeleteDates,
   setUpdateMaterial,
 } from '../store/features/materialSlice';
-import { Material } from '../schema/material-schema';
+import { getToken } from 'firebase/app-check';
 
-import { tokenApp } from '../firebaseConf';
+import { appCheck } from '../firebaseConf';
+
+import { Material } from '../schema/material-schema';
 
 const urlLocal = 'http://localhost:3000/api';
 
@@ -26,6 +28,7 @@ export const getAllBookingService = createAsyncThunk(
   'getBooking',
   async ({ token }: { token: string }, { dispatch }) => {
     try {
+      const tokenApp = (await getToken(appCheck)).token;
       const { data, status } = await axios.get<Booking[] | []>(
         `${urlLocal}/booking`,
         {
@@ -52,6 +55,7 @@ export const getBookingById = createAsyncThunk(
     { dispatch }
   ) => {
     try {
+      const tokenApp = (await getToken(appCheck)).token;
       const { data } = await axios.get<Booking>(
         `${urlLocal}/booking/${id}`,
         {
@@ -76,6 +80,7 @@ export const createBookingService = createAsyncThunk(
     { dispatch }
   ) => {
     try {
+      const tokenApp = (await getToken(appCheck)).token;
       const { data, status } = await axios.post<Booking>(
         `${urlLocal}/booking`,
         booking,
@@ -109,6 +114,7 @@ export const deleteBookingByIdService = createAsyncThunk(
     { dispatch }
   ) => {
     try {
+      const tokenApp = (await getToken(appCheck)).token;
       const { data, status } = await axios.delete<Material>(
         `${urlLocal}/booking/${id}`,
         {
@@ -136,9 +142,8 @@ export const getUnavailableDatesService = createAsyncThunk(
     { id, token }: { id: string; token: string },
     { dispatch }
   ) => {
-    console.log(id);
-
     try {
+      const tokenApp = (await getToken(appCheck)).token;
       const { data } = await axios.get<string[] | []>(
         `${urlLocal}/booking/unavailableDates/${id}`,
         {
@@ -164,6 +169,7 @@ export const updateBookingService = createAsyncThunk(
     { dispatch }
   ) => {
     try {
+      const tokenApp = (await getToken(appCheck)).token;
       const { data, status } = await axios.put<{
         bookingRes: Booking;
         materialRes: Material;
@@ -194,6 +200,7 @@ export const markAsPaidService = createAsyncThunk(
     { dispatch }
   ) => {
     try {
+      const tokenApp = (await getToken(appCheck)).token;
       const { status } = await axios.put<null>(
         `${urlLocal}/booking/markAsPaid/${id}`,
         {},

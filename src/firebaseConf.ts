@@ -24,14 +24,7 @@ export const auth = getAuth(app);
 export const db = getFirestore(app);
 export const storage = getStorage(app);
 
-const appCheck = initializeAppCheck(app, {
+export const appCheck = initializeAppCheck(app, {
   provider: new ReCaptchaV3Provider(import.meta.env.VITE_SITE_KEY),
   isTokenAutoRefreshEnabled: true,
 });
-
-const getTokenCheckApp = async () => {
-  const { token } = await getToken(appCheck);
-  return token;
-};
-
-export const tokenApp = await getTokenCheckApp();
