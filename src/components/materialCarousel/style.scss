@@ -1,11 +1,13 @@
 .carousel-root {
   display: flex;
   flex-direction: row-reverse;
+  width: fit-content;
+  gap: 100px;
+  margin: auto;
 }
 
 .carousel {
   border: 1px solid grey;
-  margin: auto;
 
   .slider-wrapper,
   .slider {
@@ -30,6 +32,11 @@
   .carousel-status {
     display: none;
   }
+
+  .thumbs-wrapper {
+    overflow: hidden;
+    overflow-y: scroll;
+  }
 }
 
 .carousel:first-child {
@@ -49,7 +56,6 @@
     flex-direction: column;
     gap: 10px;
     width: 100% !important;
-
     transform: unset !important;
     transition-duration: unset;
   }

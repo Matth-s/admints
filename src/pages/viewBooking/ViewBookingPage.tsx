@@ -22,8 +22,8 @@ import ViewPdfModal from '../../components/modals/viewPdfModal/ViewPdfModal';
 import BookingForm from '../../components/forms/booking/BookingForm';
 import BookingInformation from '../../components/bookingInformartion/BookingInformation';
 
-import './style.scss';
 import 'react-toastify/dist/ReactToastify.css';
+import './style.scss';
 
 const ViewBookingPage = () => {
   const { id } = useParams();

@@ -5,7 +5,6 @@ import { getStorage } from 'firebase/storage';
 
 import {
   initializeAppCheck,
-  getToken,
   ReCaptchaV3Provider,
 } from 'firebase/app-check';
 
