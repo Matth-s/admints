@@ -24,6 +24,7 @@ import BookingInformation from '../../components/bookingInformartion/BookingInfo
 
 import 'react-toastify/dist/ReactToastify.css';
 import './style.scss';
+import BackButton from '../../components/buttons/back/BackButton';
 
 const ViewBookingPage = () => {
   const { id } = useParams();
@@ -84,7 +85,7 @@ const ViewBookingPage = () => {
         })
         .catch(() => {
           toast.error(
-            'Une erreur est survenue lors de la mise a jour',
+            'Une erreur est survenue lors de la mise à jour',
             {
               position: 'bottom-center',
               autoClose: 5000,
@@ -129,6 +130,8 @@ const ViewBookingPage = () => {
       ) : (
         viewBooking && (
           <div className="view-booking-content">
+            <BackButton />
+
             <ActionBooking
               setOpenModalDelete={setOpenModalDelete}
               setIsditing={setIsditing}

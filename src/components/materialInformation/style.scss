@@ -1,3 +1,7 @@
 .material-information {
   height: auto;
+
+  p:not(:last-child) {
+    margin-bottom: 10px;
+  }
 }

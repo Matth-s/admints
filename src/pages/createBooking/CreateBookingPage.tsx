@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 
 import BookingForm from '../../components/forms/booking/BookingForm';
 import Header from '../../components/header/Header';
+import BackButton from '../../components/buttons/back/BackButton';
 
 import './style.scss';
 
@@ -29,6 +30,7 @@ const CreateBookingPage = () => {
       <Header />
 
       <div className="create-booking-content">
+        <BackButton />
         <BookingForm isEditing={false} booking={createBooking} />
       </div>
     </section>

@@ -1,5 +1,7 @@
 import { DateRangePicker } from 'react-date-range';
 
+import { fr } from 'date-fns/locale';
+
 import 'react-date-range/dist/styles.css';
 import 'react-date-range/dist/theme/default.css';
 
@@ -20,6 +22,7 @@ const ViewCalendar = ({ disabledDates }: Props) => {
   return (
     <div className="view-calendar-container">
       <DateRangePicker
+        locale={fr}
         onChange={() => null}
         months={2}
         ranges={[]}

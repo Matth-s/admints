@@ -17,10 +17,12 @@ import CalendarModal from '../../components/modals/calendarModal/CalendarModal';
 import DeleteMaterialModal from '../../components/modals/deleteMaterialModal/DeleteMaterialModal';
 
 import './style.scss';
+import BackButton from '../../components/buttons/back/BackButton';
 
 const ViewMaterialPage = () => {
   const { id } = useParams();
   const dispatch = useAppDispatch();
+
   const [isLoading, setIsLoading] = useState<boolean>();
   const [notFound, setNotFound] = useState<boolean>(false);
   const [isEditing, setIsEditing] = useState<boolean>(false);
@@ -69,6 +71,8 @@ const ViewMaterialPage = () => {
       ) : (
         viewMaterial && (
           <section>
+            <BackButton />
+
             <ActionBar
               setIsEditing={setIsEditing}
               setOpenDelete={setOpenDelete}

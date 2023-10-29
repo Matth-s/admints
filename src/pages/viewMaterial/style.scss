@@ -10,6 +10,7 @@
   }
 
   .information-div {
+    flex-direction: column;
     width: 100%;
     height: auto;
     margin: auto;
@@ -31,5 +32,13 @@
   .material-information,
   .provided-material {
     width: calc(100% - 20px);
+  }
+}
+
+@media screen and (max-width: 1200px) {
+  .view-material-container {
+    section {
+      width: 90%;
+    }
   }
 }

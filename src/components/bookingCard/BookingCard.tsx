@@ -5,6 +5,7 @@ import { Booking } from '../../schema/booking-schema';
 import './style.scss';
 import { useAppDispatch } from '../../store/store';
 import { setViewBooking } from '../../store/features/bookingSlice';
+import Status from '../status/Status';
 
 type Props = {
   booking: Booking;
@@ -27,7 +28,12 @@ const BookingCard = ({ booking }: Props) => {
       <td>{booking.lastName}</td>
       <td>{booking.firstName}</td>
       <td>{booking.total}</td>
-      <td>{booking.isCompleted ? 'Payé' : 'Non payé'}</td>
+      <td>
+        {' '}
+        <Status
+          status={booking.isCompleted ? 'paid' : 'notPaid'}
+        />{' '}
+      </td>
     </tr>
   );
 };

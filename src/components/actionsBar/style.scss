@@ -3,3 +3,9 @@
   gap: 20px;
   margin: auto;
 }
+
+@media screen and (max-width: 625px) {
+  .action-bar {
+    flex-direction: column;
+  }
+}

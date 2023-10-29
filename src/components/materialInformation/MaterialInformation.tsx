@@ -13,9 +13,7 @@ const MaterialInformation = ({ material }: Props) => {
       <p>Description: {material.description}</p>
       <p>Prix par jour: {material.pricePerDay}</p>
       <p>Acompte: {material.downPayment}</p>
-      <p>
-        Tarif de coaching par heure: {material.coachingPriceHour}{' '}
-      </p>
+      <p>Tarif de coaching par heure: {material.coachingPriceHour}</p>
     </div>
   );
 };

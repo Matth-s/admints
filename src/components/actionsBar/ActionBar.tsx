@@ -6,11 +6,12 @@ import { useAppDispatch } from '../../store/store';
 import { useNavigate } from 'react-router-dom';
 import { Material } from '../../schema/material-schema';
 
-import './style.scss';
 import {
   setSearchBooking,
   setSearchChoice,
 } from '../../store/features/searchSlice';
+
+import './style.scss';
 
 type Props = {
   setIsEditing: React.Dispatch<React.SetStateAction<boolean>>;
@@ -81,7 +82,7 @@ const ActionBar = ({
       </button>
 
       <button onClick={() => handleGoViewBooking()}>
-        Aller aux reservations concernant ce matériel
+        Réservations
       </button>
 
       <button onClick={() => setOpenDelete(true)}>Supprimer</button>

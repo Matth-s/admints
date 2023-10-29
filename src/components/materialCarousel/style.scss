@@ -29,13 +29,9 @@
     }
   }
 
-  .carousel-status {
+  .carousel-status,
+  .control-arrow {
     display: none;
-  }
-
-  .thumbs-wrapper {
-    overflow: hidden;
-    overflow-y: scroll;
   }
 }
 
@@ -50,6 +46,8 @@
   margin: 0 !important;
   height: 400px;
   width: 100px !important;
+  min-width: 100px !important;
+  overflow-y: scroll;
 
   ul {
     display: flex;
@@ -72,5 +70,44 @@
   .thumbs-wrapper {
     margin: 0;
     overflow: unset;
+  }
+}
+
+@media screen and (max-width: 1130px) {
+  .carousel-root {
+    gap: 30px;
+    width: 100%;
+  }
+
+  .carousel:first-child {
+    width: 40%;
+  }
+}
+
+@media screen and (max-width: 830px) {
+  .carousel-root {
+    flex-direction: column-reverse;
+  }
+
+  .carousel:first-child {
+    width: 100% !important;
+  }
+
+  .carousel:last-child {
+    height: 100px !important;
+    width: 100% !important;
+    min-width: unset !important;
+    overflow-y: hidden;
+    overflow-x: scroll;
+
+    ul {
+      flex-direction: row;
+      gap: 10px;
+      width: 100% !important;
+    }
+
+    li {
+      margin: 0;
+    }
   }
 }

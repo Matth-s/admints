@@ -1,0 +1,11 @@
+.status-div {
+  width: fit-content;
+  height: 48px;
+  gap: 8px;
+
+  span {
+    width: 8px;
+    height: 8px;
+    border-radius: 100%;
+  }
+}

@@ -96,7 +96,7 @@ const AddMaterialForm = ({
         ))}
 
       <span onClick={() => handleAddMaterial()}>
-        Ajouter un matriel
+        Ajouter un matériel
       </span>
     </div>
   );
