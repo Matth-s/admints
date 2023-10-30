@@ -15,3 +15,26 @@
     }
   }
 }
+
+@media screen and (max-width: 720px) {
+  .booking-calendar-container {
+    .rdrMonth {
+      width: 350px !important;
+    }
+    .rdrCalendarWrapper {
+      width: 100% !important;
+    }
+  }
+}
+
+@media screen and (max-width: 505px) {
+  .booking-calendar-container {
+    .rdrMonth {
+      width: 100% !important;
+    }
+
+    .rdrCalendarWrapper {
+      width: 100% !important;
+    }
+  }
+}

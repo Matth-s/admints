@@ -22,3 +22,27 @@
     opacity: 1;
   }
 }
+
+@media screen and (max-width: 700px) {
+  .view-calendar-container {
+    .rdrCalendarWrapper {
+      width: 400px;
+    }
+
+    .rdrMonth {
+      width: 100%;
+
+      button {
+        height: 50px !important;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 450px) {
+  .view-calendar-container {
+    .rdrCalendarWrapper {
+      width: 100%;
+    }
+  }
+}

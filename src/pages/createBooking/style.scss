@@ -1,6 +1,15 @@
-.create-booking-page {
+.create-booking-container {
   .create-booking-content {
     width: fit-content;
     margin: 40px auto 0;
+  }
+}
+
+@media screen and (max-width: 1250px) {
+  .create-booking-container {
+    .create-booking-content {
+      width: 90%;
+      min-width: unset;
+    }
   }
 }

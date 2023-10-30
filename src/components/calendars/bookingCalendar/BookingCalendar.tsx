@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState, useRef } from 'react';
 import { DateRangePicker } from 'react-date-range';
 import { eachDayOfInterval, format } from 'date-fns';
 
@@ -20,6 +20,26 @@ const BookingCalendar = ({
   setDataForm,
   selectedDate,
 }: Props) => {
+  const [orientation, setOrientation] = useState<
+    'horizontal' | 'vertical'
+  >(window.innerWidth > 720 ? 'horizontal' : 'vertical');
+
+  useEffect(() => {
+    const handleWindowResize = () => {
+      const newOrientation =
+        window.innerWidth > 720 ? 'horizontal' : 'vertical';
+      setOrientation(newOrientation);
+    };
+
+    window.addEventListener('resize', handleWindowResize);
+
+    console.log('useEffect');
+
+    return () => {
+      window.removeEventListener('resize', handleWindowResize);
+    };
+  }, []);
+
   const selectedDateProps = useMemo(() => {
     return selectedDate;
   }, []);
@@ -97,7 +117,7 @@ const BookingCalendar = ({
         ranges={dateSelected}
         disabledDates={disabledDateRanges()}
         minDate={new Date()}
-        direction="horizontal"
+        direction={orientation}
         staticRanges={[]}
         inputRanges={[]}
       />

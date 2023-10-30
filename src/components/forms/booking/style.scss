@@ -98,9 +98,21 @@
       padding: 10px;
     }
 
+    .top {
+      overflow: hidden;
+    }
+
     .top,
     .down {
       padding: 10px 0 0 0;
+    }
+  }
+}
+
+@media screen and (max-width: 330px) {
+  .form-container {
+    form {
+      padding: 5px;
     }
   }
 }

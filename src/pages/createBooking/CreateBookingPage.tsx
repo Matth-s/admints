@@ -26,14 +26,14 @@ const CreateBookingPage = () => {
   }
 
   return (
-    <section className="create-booking-page">
+    <div className="create-booking-container">
       <Header />
 
       <div className="create-booking-content">
         <BackButton />
         <BookingForm isEditing={false} booking={createBooking} />
       </div>
-    </section>
+    </div>
   );
 };
 

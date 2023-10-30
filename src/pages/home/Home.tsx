@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
 
 import { useNavigate } from 'react-router-dom';
 
@@ -17,6 +17,9 @@ type Props = {
 
 const Home = ({ isLoading }: Props) => {
   const navigate = useNavigate();
+
+  const token = useAppSelector((state) => state.userSlice.token);
+
   const { material } = useAppSelector((state) => state.MaterialSlice);
   const { searchMaterial } = useAppSelector(
     (state) => state.searchSlice

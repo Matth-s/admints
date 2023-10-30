@@ -3,3 +3,9 @@
   width: fit-content;
   gap: 20px;
 }
+
+@media screen and (max-width: 570px) {
+  .action-booking-container {
+    flex-direction: column;
+  }
+}

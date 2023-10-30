@@ -212,7 +212,7 @@ const BookingForm = ({ booking, isEditing, setIsEditing }: Props) => {
             </div>
 
             <div className="down">
-              <h3>Matériel founit</h3>
+              <h3>Matériel à founir</h3>
               <MaterialBooking
                 providedMaterials={dataForm.providedMaterialsBooking}
                 setFormData={setDataForm}

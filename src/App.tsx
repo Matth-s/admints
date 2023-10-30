@@ -41,7 +41,7 @@ function App() {
     await dispatch(getAllMaterialService())
       .unwrap()
       .then()
-      .catch((error) => console.log(error, 'matérial error'))
+      .catch(() => console.log('rror'))
       .finally(() => setIsMaterialLoading(false));
   };
 

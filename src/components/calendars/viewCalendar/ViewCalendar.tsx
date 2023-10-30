@@ -1,5 +1,5 @@
+import { useEffect, useState } from 'react';
 import { DateRangePicker } from 'react-date-range';
-
 import { fr } from 'date-fns/locale';
 
 import 'react-date-range/dist/styles.css';
@@ -12,6 +12,24 @@ type Props = {
 };
 
 const ViewCalendar = ({ disabledDates }: Props) => {
+  const [orientation, setOrientation] = useState<
+    'horizontal' | 'vertical'
+  >(window.innerWidth > 720 ? 'horizontal' : 'vertical');
+
+  useEffect(() => {
+    const handleWindowResize = () => {
+      const newOrientation =
+        window.innerWidth > 720 ? 'horizontal' : 'vertical';
+      setOrientation(newOrientation);
+    };
+
+    window.addEventListener('resize', handleWindowResize);
+
+    return () => {
+      window.removeEventListener('resize', handleWindowResize);
+    };
+  }, []);
+
   const disabledDateRanges =
     disabledDates.length > 0
       ? disabledDates.map((item) => {
@@ -30,7 +48,7 @@ const ViewCalendar = ({ disabledDates }: Props) => {
         minDate={new Date()}
         staticRanges={[]}
         inputRanges={[]}
-        direction="horizontal"
+        direction={orientation}
       />
     </div>
   );
