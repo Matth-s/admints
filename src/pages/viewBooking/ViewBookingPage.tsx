@@ -21,10 +21,10 @@ import DeleteBookingModal from '../../components/modals/deleteBookingModal/Delet
 import ViewPdfModal from '../../components/modals/viewPdfModal/ViewPdfModal';
 import BookingForm from '../../components/forms/booking/BookingForm';
 import BookingInformation from '../../components/bookingInformartion/BookingInformation';
+import BackButton from '../../components/buttons/back/BackButton';
 
 import 'react-toastify/dist/ReactToastify.css';
 import './style.scss';
-import BackButton from '../../components/buttons/back/BackButton';
 
 const ViewBookingPage = () => {
   const { id } = useParams();

@@ -1,6 +1,17 @@
 .booking-calendar-container {
+  width: fit-content;
+  margin: auto;
+
   .rdrDefinedRangesWrapper,
   .rdrDateDisplayWrapper {
     display: none;
+  }
+}
+
+@media screen and (max-width: 850px) {
+  .booking-calendar-container {
+    .rdrMonth {
+      width: 280px !important;
+    }
   }
 }

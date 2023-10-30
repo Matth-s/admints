@@ -58,3 +58,49 @@
     border-radius: 10px;
   }
 }
+
+@media screen and (max-width: 1250px) {
+  .form-container {
+    width: 100%;
+
+    form {
+      width: 100%;
+    }
+
+    .part-div {
+      flex-direction: column;
+      width: 100%;
+      gap: 25px;
+    }
+
+    .left-part {
+      width: 706px;
+    }
+
+    .right-part {
+      margin: auto;
+    }
+  }
+}
+
+@media screen and (max-width: 850px) {
+  .form-container {
+    .left-part,
+    .right-part {
+      width: 100%;
+    }
+  }
+}
+
+@media screen and (max-width: 410px) {
+  .form-container {
+    form {
+      padding: 10px;
+    }
+
+    .top,
+    .down {
+      padding: 10px 0 0 0;
+    }
+  }
+}

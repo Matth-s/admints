@@ -25,7 +25,7 @@ const ActionBooking = ({
         Modifier
       </button>
       <button onClick={() => setOpenModalPdf(() => true)}>
-        Afficher le pdf
+        Devis
       </button>
       <button onClick={() => setOpenModalDelete(() => true)}>
         Suprimer

@@ -10,3 +10,20 @@
     margin-bottom: 40px;
   }
 }
+
+@media screen and (max-width: 1250px) {
+  .view-booking-container {
+    .view-booking-content {
+      width: 90%;
+      min-width: unset;
+    }
+  }
+}
+
+@media screen and (max-width: 375px) {
+  .view-booking-container {
+    .view-booking-content {
+      width: 98%;
+    }
+  }
+}

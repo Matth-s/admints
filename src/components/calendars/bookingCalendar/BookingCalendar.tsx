@@ -20,6 +20,8 @@ const BookingCalendar = ({
   setDataForm,
   selectedDate,
 }: Props) => {
+  let orientation: string = 'vertical';
+
   const selectedDateProps = useMemo(() => {
     return selectedDate;
   }, []);
