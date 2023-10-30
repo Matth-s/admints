@@ -13,3 +13,12 @@
     text-align: center;
   }
 }
+
+@media screen and (max-width: 530px) {
+  .sign-up-container {
+    .sign-up-content {
+      width: 90%;
+      padding: 20px;
+    }
+  }
+}

@@ -27,3 +27,9 @@
     margin-bottom: 20px;
   }
 }
+
+@media screen and (max-width: 530px) {
+  .sign-up-form {
+    width: 100%;
+  }
+}
