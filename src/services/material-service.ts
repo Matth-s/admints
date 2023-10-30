@@ -14,7 +14,7 @@ import { getToken } from 'firebase/app-check';
 
 import { appCheck } from '../firebaseConf';
 
-const urlLocal = 'https://backendlocation.onrender.com';
+const urlLocal = 'https://backendlocation.onrender.com/api';
 
 export const getAllMaterialService = createAsyncThunk(
   'getAllMaterial',

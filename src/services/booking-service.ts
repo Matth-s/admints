@@ -15,13 +15,14 @@ import {
   setAddBookingDate,
   setUpdateMaterial,
 } from '../store/features/materialSlice';
+
 import { getToken } from 'firebase/app-check';
 
 import { appCheck } from '../firebaseConf';
 
 import { Material } from '../schema/material-schema';
 
-const urlLocal = 'https://backendlocation.onrender.com';
+const urlLocal = 'https://backendlocation.onrender.com/api';
 
 export const getAllBookingService = createAsyncThunk(
   'getBooking',
