@@ -1,5 +1,7 @@
 .search-bar-booking-container {
+  width: fit-content;
   margin: 0 auto 40px;
+  gap: 30px;
 
   h2 {
     height: min-content;
@@ -7,12 +9,31 @@
   }
 
   input {
-    width: 60%;
     margin: 0;
   }
 
   input,
   select {
+    width: 400px;
     height: 48px;
+  }
+}
+
+@media screen and (max-width: 1060px) {
+  .search-bar-booking-container {
+    flex-direction: column;
+    gap: 20px;
+  }
+}
+
+@media screen and (max-width: 470px) {
+  .search-bar-booking-container {
+    width: 95%;
+    gap: 20px;
+
+    input,
+    select {
+      width: 100%;
+    }
   }
 }

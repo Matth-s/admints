@@ -63,52 +63,56 @@ const BookingPage = ({ isLoading }: Props) => {
       <div className="booking-content">
         <SearchBarBooking />
 
-        {(searchChoice !== '' && searchChoice === 'paid') ||
-        searchChoice === 'notPaid' ||
-        searchChoice === 'hightToLow' ||
-        searchChoice === 'lowToHight' ? (
-          <h2>
-            {bookingMemo.length} résultat
-            {bookingMemo.length > 1 ? 's' : ''} pour {searchChoice}
-          </h2>
-        ) : (
-          searchBooking !== '' && (
+        {searchChoice.length !== 0 ? (
+          searchChoice === 'paid' ||
+          searchChoice === 'notPaid' ||
+          searchChoice === 'hightToLow' ||
+          searchChoice === 'lowToHight' ? (
             <h2>
               {bookingMemo.length} résultat
-              {bookingMemo.length > 1 ? 's' : ''} pour '
-              {searchBooking}'
+              {bookingMemo.length > 1 ? 's' : ''} pour {searchChoice}
             </h2>
+          ) : (
+            searchBooking !== '' && (
+              <h2>
+                {bookingMemo.length} résultat
+                {bookingMemo.length > 1 ? 's' : ''} pour '
+                {searchBooking}'
+              </h2>
+            )
           )
-        )}
+        ) : null}
 
-        <table>
-          <thead>
-            <tr>
-              <th>Date de début</th>
-              <th>Date de fin</th>
-              <th>Matériel</th>
-              <th>Nom</th>
-              <th>Prenom</th>
-              <th>Total</th>
-              <th>Status</th>
-              <th></th>
-            </tr>
-          </thead>
-
-          <tbody>
-            {bookingMemo.length > 0 ? (
-              bookingMemo.map((item) => (
-                <BookingCard key={item.id} booking={item} />
-              ))
-            ) : (
-              <tr className="empty-tr">
-                <td className="absolute absolute__center">
-                  Aucune réservation
-                </td>
+        <section className="table-section">
+          <table>
+            <thead>
+              <tr>
+                <th>Date de début</th>
+                <th>Date de fin</th>
+                <th>Matériel</th>
+                <th>Nom</th>
+                <th>Prenom</th>
+                <th>Total</th>
+                <th>Status</th>
+                <th></th>
               </tr>
-            )}
-          </tbody>
-        </table>
+            </thead>
+
+            <tbody>
+              {bookingMemo.length > 0 ? (
+                bookingMemo.map((item) => (
+                  <BookingCard key={item.id} booking={item} />
+                ))
+              ) : (
+                <tr className="empty-tr">
+                  <td className="absolute absolute__center">
+                    Aucune réservation
+                  </td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+        </section>
       </div>
     </div>
   );

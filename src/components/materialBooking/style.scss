@@ -5,6 +5,9 @@
   }
 
   table {
+    width: fit-content;
+    margin: auto;
+
     button {
       margin: 0;
     }
@@ -33,6 +36,10 @@
     width: 80px;
   }
 
+  th:last-child {
+    width: fit-content;
+  }
+
   td:first-child {
     input {
       width: 300px;
@@ -49,5 +56,36 @@
   button {
     display: block;
     margin: 20px auto 0;
+  }
+}
+
+@media screen and (max-width: 790px) {
+  .material-booking-container {
+    td:first-child {
+      input {
+        width: 100%;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 640px) {
+  .material-booking-container {
+    td:not(:first-child) {
+      text-align: center;
+      input {
+        width: 50px;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 540px) {
+  .material-booking-container {
+    overflow-x: scroll;
+
+    table {
+      min-width: 385px;
+    }
   }
 }

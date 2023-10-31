@@ -12,15 +12,13 @@ type Props = {
 };
 
 const ViewCalendar = ({ disabledDates }: Props) => {
-  const [orientation, setOrientation] = useState<
-    'horizontal' | 'vertical'
-  >(window.innerWidth > 720 ? 'horizontal' : 'vertical');
+  const [howManyMonth, setHowManyMonth] = useState<number>(
+    window.innerWidth > 720 ? 2 : 1
+  );
 
   useEffect(() => {
     const handleWindowResize = () => {
-      const newOrientation =
-        window.innerWidth > 720 ? 'horizontal' : 'vertical';
-      setOrientation(newOrientation);
+      setHowManyMonth(window.innerWidth > 720 ? 2 : 1);
     };
 
     window.addEventListener('resize', handleWindowResize);
@@ -42,13 +40,13 @@ const ViewCalendar = ({ disabledDates }: Props) => {
       <DateRangePicker
         locale={fr}
         onChange={() => null}
-        months={2}
+        months={howManyMonth}
         ranges={[]}
         disabledDates={disabledDateRanges}
         minDate={new Date()}
         staticRanges={[]}
         inputRanges={[]}
-        direction={orientation}
+        direction="horizontal"
       />
     </div>
   );

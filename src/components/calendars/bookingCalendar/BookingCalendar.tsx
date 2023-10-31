@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState, useRef } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { DateRangePicker } from 'react-date-range';
 import { eachDayOfInterval, format } from 'date-fns';
 

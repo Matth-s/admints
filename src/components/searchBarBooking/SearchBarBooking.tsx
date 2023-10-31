@@ -21,7 +21,7 @@ const SearchBarBooking = () => {
   };
 
   return (
-    <div className="search-bar-booking-container flex flex__alignCenter flex__spaceBetween">
+    <div className="search-bar-booking-container flex flex__alignCenter">
       <h2>Filtrer par: </h2>
       <select
         onChange={(e) => handleChangeSelect(e.target.value)}

@@ -13,3 +13,11 @@
     margin: auto;
   }
 }
+
+@media screen and (max-width: 440px) {
+  .provided-material-row {
+    input:nth-child(1) {
+      width: 80%;
+    }
+  }
+}

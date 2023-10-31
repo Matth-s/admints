@@ -48,3 +48,24 @@
     border-right: 1pt solid black;
   }
 }
+
+@media screen and (max-width: 900px) {
+  .booking-information-container {
+    flex-direction: column;
+    gap: 20px;
+
+    li {
+      word-break: break-all;
+    }
+
+    h2 {
+      text-align: center;
+    }
+
+    div {
+      align-self: center;
+      width: fit-content;
+      padding: 0 10px;
+    }
+  }
+}

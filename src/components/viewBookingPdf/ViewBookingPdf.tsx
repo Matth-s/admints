@@ -32,7 +32,6 @@ const ViewBookingPdf = ({ booking }: Props) => {
       borderRadius: '3px',
       border: '1px solid gray',
       display: 'flex',
-      alignItems: 'center',
       gap: '2px',
       padding: '3px',
       fontSize: '11px',
@@ -44,7 +43,7 @@ const ViewBookingPdf = ({ booking }: Props) => {
   };
 
   return (
-    <div className="view-booking-pdf-container absolute absolute__center">
+    <div className="view-booking-pdf-container  absolute absolute__center">
       <div
         style={{
           ...styles.flex,

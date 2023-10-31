@@ -11,8 +11,23 @@
     border-radius: 10px;
   }
 
+  div {
+    height: 40px;
+  }
+
   a {
     color: #000;
     font-weight: bold;
+  }
+}
+
+@media screen and (max-width: 450px) {
+  .view-booking-pdf-container {
+    width: 95%;
+
+    div {
+      height: 120px;
+      flex-direction: column;
+    }
   }
 }

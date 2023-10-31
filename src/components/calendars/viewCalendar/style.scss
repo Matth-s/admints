@@ -1,5 +1,6 @@
 .view-calendar-container {
   margin: auto;
+  height: auto;
 
   .rdrDateRangePickerWrapper {
     border-radius: 10px !important;
@@ -44,5 +45,11 @@
     .rdrCalendarWrapper {
       width: 100%;
     }
+  }
+}
+
+@media screen and (max-height: 650px) {
+  .view-calendar-container {
+    margin: 80px auto 0;
   }
 }

@@ -10,9 +10,13 @@
     margin-bottom: 20px;
   }
 
-  table {
+  .table-section {
     width: 100%;
     height: auto;
+  }
+
+  table {
+    width: 100%;
     border-collapse: collapse;
   }
 
@@ -48,9 +52,12 @@
 
 @media screen and (max-width: 830px) {
   .booking-page-container {
+    .table-section {
+      overflow-x: scroll;
+    }
+
     table {
       min-width: 785px;
-      overflow-x: scroll;
     }
   }
 }

@@ -94,7 +94,7 @@
   }
 
   .carousel:last-child {
-    height: 82px !important;
+    height: fit-content !important;
     width: 100% !important;
     min-width: unset !important;
     overflow-y: hidden;
