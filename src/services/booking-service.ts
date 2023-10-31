@@ -22,7 +22,7 @@ import { appCheck } from '../firebaseConf';
 
 import { Material } from '../schema/material-schema';
 
-const urlLocal = 'http://localhost:3000/api';
+const urlLocal = 'https://backendlocation.onrender.com/api';
 
 export const getAllBookingService = createAsyncThunk(
   'getBooking',
