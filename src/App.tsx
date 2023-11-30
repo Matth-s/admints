@@ -17,6 +17,7 @@ import BookingPage from './pages/booking/BookingPage';
 import CreateBookingPage from './pages/createBooking/CreateBookingPage';
 import ViewBookingPage from './pages/viewBooking/ViewBookingPage';
 import MessagingPage from './pages/messaging/MessagingPage';
+import { getAllMessagingService } from './services/messaging-service';
 
 function App() {
   const dispatch = useAppDispatch();
@@ -24,8 +25,8 @@ function App() {
   const [materialLoading, setIsMaterialLoading] =
     useState<boolean>(true);
   const [bookingLoading, setBookingLoading] = useState<boolean>(true);
-  /* const [messaginLoading, setMessagingLoading] =
-    useState<boolean>(true);*/
+  const [messaginLoading, setMessagingLoading] =
+    useState<boolean>(true);
 
   const { token } = useAppSelector((state) => state.userSlice);
 
@@ -53,9 +54,11 @@ function App() {
       .finally(() => setBookingLoading(false));
   };
 
-  /* const getMessaging = async () => {
-    //dispatch().unwrap().then().catch().finally(() => setMessagingLoading(false))
-  };*/
+  const getMessaging = async () => {
+    dispatch(getAllMessagingService({ token }))
+      .catch((error) => console.log(error))
+      .finally(() => setMessagingLoading(false));
+  };
 
   useEffect(() => {
     checkUser();
@@ -63,6 +66,7 @@ function App() {
     if (token) {
       getMaterial();
       getBooking();
+      getMessaging();
     }
   }, [token]);
 
@@ -100,7 +104,12 @@ function App() {
               />
               <Route path="/" element={<Navigate to="/material" />} />
 
-              <Route path="/messaging" element={<MessagingPage />} />
+              <Route
+                path="/messaging"
+                element={
+                  <MessagingPage isLoading={messaginLoading} />
+                }
+              />
             </Route>
 
             <Route

@@ -4,7 +4,7 @@ import Header from '../../components/header/Header';
 import Loader from '../../components/loader/Loader';
 import BookingCard from '../../components/bookingCard/BookingCard';
 import SearchBarBooking from '../../components/searchBarBooking/SearchBarBooking';
-
+import { formatSearchChoice } from '../../helpers/searchChoice';
 import { useAppSelector } from '../../store/store';
 
 import './style.scss';
@@ -63,26 +63,6 @@ const BookingPage = ({ isLoading }: Props) => {
       <div className="booking-content">
         <SearchBarBooking />
 
-        {searchChoice.length !== 0 ? (
-          searchChoice === 'paid' ||
-          searchChoice === 'notPaid' ||
-          searchChoice === 'hightToLow' ||
-          searchChoice === 'lowToHight' ? (
-            <h2>
-              {bookingMemo.length} résultat
-              {bookingMemo.length > 1 ? 's' : ''} pour {searchChoice}
-            </h2>
-          ) : (
-            searchBooking !== '' && (
-              <h2>
-                {bookingMemo.length} résultat
-                {bookingMemo.length > 1 ? 's' : ''} pour '
-                {searchBooking}'
-              </h2>
-            )
-          )
-        ) : null}
-
         <section className="table-section">
           <table>
             <thead>
@@ -106,7 +86,9 @@ const BookingPage = ({ isLoading }: Props) => {
               ) : (
                 <tr className="empty-tr">
                   <td className="absolute absolute__center">
-                    Aucune réservation
+                    {searchChoice.length === 0
+                      ? 'Aucune réservation'
+                      : 'Aucun résultat pour cette recherche'}
                   </td>
                 </tr>
               )}

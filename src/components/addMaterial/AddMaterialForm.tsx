@@ -27,8 +27,6 @@ const AddMaterialForm = ({
     providedMaterials[] | []
   >(providedMaterials);
 
-  console.log(errors);
-
   useEffect(() => {
     setValue('providedMaterials', providedMaterial);
   }, [providedMaterial]);
