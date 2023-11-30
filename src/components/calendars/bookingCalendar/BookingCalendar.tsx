@@ -1,6 +1,8 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { DateRangePicker } from 'react-date-range';
 import { eachDayOfInterval, format } from 'date-fns';
+
+import { UseFormSetValue } from 'react-hook-form';
 
 import { Booking } from '../../../schema/booking-schema';
 
@@ -11,29 +13,26 @@ import './style.scss';
 
 type Props = {
   disabledDates: string[] | [];
-  setDataForm: React.Dispatch<React.SetStateAction<Booking>>;
+  setValue: UseFormSetValue<Booking>;
   selectedDate: string[] | [];
 };
 
 const BookingCalendar = ({
   disabledDates,
-  setDataForm,
+  setValue,
   selectedDate,
 }: Props) => {
-  const [orientation, setOrientation] = useState<
-    'horizontal' | 'vertical'
-  >(window.innerWidth > 720 ? 'horizontal' : 'vertical');
+  const [manyMonth, setManyMonth] = useState<1 | 2>(
+    window.innerWidth > 720 ? 1 : 2
+  );
 
   useEffect(() => {
     const handleWindowResize = () => {
-      const newOrientation =
-        window.innerWidth > 720 ? 'horizontal' : 'vertical';
-      setOrientation(newOrientation);
+      const howManyMonth = window.innerWidth > 720 ? 2 : 1;
+      setManyMonth(howManyMonth);
     };
 
     window.addEventListener('resize', handleWindowResize);
-
-    console.log('useEffect');
 
     return () => {
       window.removeEventListener('resize', handleWindowResize);
@@ -93,12 +92,7 @@ const BookingCalendar = ({
       format(date, 'yyyy-MM-dd')
     );
 
-    setDataForm((prev) => {
-      return {
-        ...prev,
-        bookingDates: [...arrayOfDate],
-      };
-    });
+    setValue('bookingDates', arrayOfDate);
     setDateSelected([
       {
         startDate: startDate,
@@ -113,11 +107,11 @@ const BookingCalendar = ({
       <DateRangePicker
         onChange={(e) => handleDateChange(e)}
         moveRangeOnFirstSelection={false}
-        months={2}
+        months={manyMonth}
         ranges={dateSelected}
         disabledDates={disabledDateRanges()}
         minDate={new Date()}
-        direction={orientation}
+        direction={'horizontal'}
         staticRanges={[]}
         inputRanges={[]}
       />

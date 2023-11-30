@@ -5,6 +5,10 @@ import {
 } from '../../../schema/material-schema';
 
 import { FileData } from '../../../schema/file-schema';
+import { FormMaterialSchema } from '../../../schema/checker-schema';
+import { useForm, SubmitHandler } from 'react-hook-form';
+import { z } from 'zod';
+import { zodResolver } from '@hookform/resolvers/zod';
 
 import { useAppDispatch, useAppSelector } from '../../../store/store';
 import {
@@ -23,6 +27,8 @@ import AddImageForm from '../../addImageForm/AddImageForm';
 
 import './style.scss';
 
+type Inputs = z.infer<typeof FormMaterialSchema>;
+
 type Props = {
   material: Material;
   isEditing: boolean;
@@ -34,81 +40,61 @@ const MaterialForm = ({
   isEditing,
   setIsEditing,
 }: Props) => {
-  const [formData, setFormData] = useState<Material>(material);
+  const {
+    register,
+    handleSubmit,
+    reset,
+    setValue,
+    watch,
+    formState: { errors },
+  } = useForm({
+    values: material,
+    resolver: zodResolver(FormMaterialSchema),
+  });
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [files, setFiles] = useState<FileData[]>([]);
   const [images, setImages] = useState<arrayPicture[]>(
-    formData.arrayPicture
+    watch('arrayPicture')
   );
   const { token } = useAppSelector((state) => state.userSlice);
 
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-  const handleChange = (e: any) => {
-    const { name, value } = e.target;
-
-    setFormData((prev) => {
-      if (name === 'visible') {
-        return {
-          ...prev,
-          [name]: !formData.visible,
-        };
-      }
-
-      if (
-        name === 'pricePerDay' ||
-        name === 'downPayment' ||
-        name === 'coachingPriceHour'
-      ) {
-        return {
-          ...prev,
-          [name]: value === '' ? 0 : parseInt(value),
-        };
-      }
-
-      return {
-        ...prev,
-        [name]: value.trim(),
-      };
-    });
-  };
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const processForm: SubmitHandler<Inputs> = async (data) => {
     setIsLoading(true);
 
     if (files.length > 0) {
-      await dispatch(postImagesService({ files, id: formData.id }));
+      await dispatch(postImagesService({ files, id: data.id }));
     }
 
     if (isEditing) {
       await dispatch(
-        updateImageService({ images, idMaterial: formData.id })
+        updateImageService({ images, idMaterial: data.id })
       );
 
       await dispatch(
         updateMaterialService({
-          material: formData,
+          material: data,
           token,
-          id: formData.id,
+          id: data.id,
         })
       )
         .unwrap()
         .then((res: number) => {
           if (res === 200 && setIsEditing) {
             setIsEditing(false);
+            reset();
           }
         })
         .catch((error) => console.log(error))
         .finally(() => setIsLoading(false));
     } else {
-      await dispatch(
-        createMaterialService({ material: formData, token })
-      )
+      await dispatch(createMaterialService({ material: data, token }))
         .then((res: any) => {
           if (res.payload.status === 201) {
             navigate(`/view-material/${res.payload.idMaterial}`);
+            reset();
           }
         })
         .catch((error) => console.log(error))
@@ -117,93 +103,98 @@ const MaterialForm = ({
   };
 
   return (
-    <form className="material-form" onSubmit={(e) => handleSubmit(e)}>
+    <form
+      className="material-form"
+      onSubmit={handleSubmit(processForm)}
+    >
       <div className="form-div">
         <label htmlFor="name">Nom du matériel</label>
-        <input
-          type="text"
-          name="name"
-          id="name"
-          required
-          defaultValue={formData.name}
-          onChange={(e) => handleChange(e)}
-        />
+        <input type="text" id="name" {...register('name')} />
+        {errors.name?.message && (
+          <p className="error-message">{errors.name.message}</p>
+        )}
       </div>
 
       <div className="form-div">
         <label htmlFor="description">Description</label>
         <textarea
-          name="description"
           id="description"
-          defaultValue={formData.description}
-          onChange={(e) => handleChange(e)}
+          {...register('description')}
         ></textarea>
+        {errors.description?.message && (
+          <p className="error-message">
+            {errors.description.message}
+          </p>
+        )}
       </div>
 
       <div className="form-div">
         <label htmlFor="pricePerDay">Tarif par jour</label>
         <input
           type="number"
-          name="pricePerDay"
           id="pricePerDay"
-          required
-          defaultValue={formData.pricePerDay}
-          onChange={(e) => handleChange(e)}
+          {...register('pricePerDay')}
         />
+        {errors.pricePerDay?.message && (
+          <p className="error-message">
+            {errors.pricePerDay.message}
+          </p>
+        )}
       </div>
 
       <div className="form-div">
         <label htmlFor="downPayment">Acompte</label>
         <input
           type="number"
-          name="downPayment"
           id="downPayment"
-          required
-          defaultValue={formData.downPayment}
-          onChange={(e) => handleChange(e)}
+          {...register('downPayment')}
         />
+        {errors.downPayment?.message && (
+          <p className="error-message">
+            {errors.downPayment.message}
+          </p>
+        )}
       </div>
 
       <div className="form-div">
-        <label htmlFor="coachingPriceHour">
-          Prix du coaching par heure
-        </label>
+        <label htmlFor="coachingPriceHour">Tarif coaching</label>
         <input
           type="number"
-          name="coachingPriceHour"
           id="coachingPriceHour"
-          required
-          defaultValue={formData.coachingPriceHour}
-          onChange={(e) => handleChange(e)}
+          {...register('coachingPriceHour')}
         />
+        {errors.coachingPriceHour?.message && (
+          <p className="error-message">
+            {errors.coachingPriceHour.message}
+          </p>
+        )}
       </div>
 
       <div className="form-div">
         <AddMaterialForm
-          providedMaterials={formData.providedMaterials}
-          setFormData={setFormData}
+          providedMaterials={watch('providedMaterials')}
+          setValue={setValue}
+          errors={errors.providedMaterials}
         />
       </div>
 
       <div className="form-div">
         <AddImageForm
-          presentationPicture={formData.presentationPicture}
-          arrayPicture={formData.arrayPicture}
+          presentationPicture={watch('presentationPicture')}
+          arrayPicture={watch('arrayPicture')}
           setFiles={setFiles}
           files={files}
           images={images}
           setImages={setImages}
-          setFormData={setFormData}
+          setValue={setValue}
         />
       </div>
 
       <div className="form-div checkbox-div flex flex__alignCenter">
         <input
           type="checkbox"
-          name="visible"
           id="visible"
-          defaultChecked={formData.visible}
-          onChange={(e) => handleChange(e)}
+          {...register('visible')}
         />
         <label htmlFor="visible">Mettre en ligne</label>
       </div>

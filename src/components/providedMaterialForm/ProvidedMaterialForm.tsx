@@ -26,7 +26,6 @@ const ProvidedMaterialRowForm = ({
         id="materialName"
         defaultValue={name}
         placeholder="nom du materiel"
-        required
         onChange={(e) => onHandleChange(e, id)}
       />
       <input
@@ -34,7 +33,6 @@ const ProvidedMaterialRowForm = ({
         name="price"
         id="price"
         defaultValue={price}
-        required
         onChange={(e) => onHandleChange(e, id)}
       />
     </div>

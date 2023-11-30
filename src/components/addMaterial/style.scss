@@ -11,4 +11,10 @@
   .provided-material-row-container:not(:last-child) {
     margin-bottom: 12px;
   }
+
+  .error {
+    color: rgb(228, 98, 98);
+    text-align: center;
+    margin: 10px 0;
+  }
 }

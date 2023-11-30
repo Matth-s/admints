@@ -20,6 +20,11 @@
     overflow: hidden;
   }
 
+  p {
+    max-height: 190px;
+    text-overflow: ellipsis;
+  }
+
   h3 {
     margin-bottom: 20px;
   }

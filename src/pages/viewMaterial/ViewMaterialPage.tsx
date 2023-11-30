@@ -15,9 +15,10 @@ import MaterialInformation from '../../components/materialInformation/MaterialIn
 import ProvidedMaterial from '../../components/providedMaterial/ProvidedMaterial';
 import CalendarModal from '../../components/modals/calendarModal/CalendarModal';
 import DeleteMaterialModal from '../../components/modals/deleteMaterialModal/DeleteMaterialModal';
+import BackButton from '../../components/buttons/back/BackButton';
 
 import './style.scss';
-import BackButton from '../../components/buttons/back/BackButton';
+
 
 const ViewMaterialPage = () => {
   const { id } = useParams();

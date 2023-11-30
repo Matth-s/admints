@@ -19,7 +19,6 @@ const BookingInformation = ({ booking }: Props) => {
           <li>Ville: {booking.city}</li>
           <li>Rue: {booking.street}</li>
           <li>Téléphone: {booking.phone}</li>
-          <li>Adresse mail: {booking.email}</li>
         </ul>
       </div>
 

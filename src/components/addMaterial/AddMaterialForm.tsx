@@ -5,6 +5,8 @@ import {
   providedMaterials,
 } from '../../schema/material-schema';
 
+import { UseFormSetValue } from 'react-hook-form';
+
 import ProvidedMaterialRowForm from '../providedMaterialForm/ProvidedMaterialForm';
 import DeleteProvidedMaterialButton from '../buttons/deleteProvidedMaterial/DeleteProvidedMaterialButton';
 
@@ -12,24 +14,23 @@ import './style.scss';
 
 type Props = {
   providedMaterials: providedMaterials[] | [];
-  setFormData: React.Dispatch<React.SetStateAction<Material>>;
+  setValue: UseFormSetValue<Material>;
+  errors: any;
 };
 
 const AddMaterialForm = ({
   providedMaterials,
-  setFormData,
+  setValue,
+  errors,
 }: Props) => {
   const [providedMaterial, setProvidedMaterial] = useState<
     providedMaterials[] | []
   >(providedMaterials);
 
+  console.log(errors);
+
   useEffect(() => {
-    setFormData((prev) => {
-      return {
-        ...prev,
-        providedMaterials: providedMaterial,
-      };
-    });
+    setValue('providedMaterials', providedMaterial);
   }, [providedMaterial]);
 
   const handleAddMaterial = () => {
@@ -98,6 +99,12 @@ const AddMaterialForm = ({
       <span onClick={() => handleAddMaterial()}>
         Ajouter un matériel
       </span>
+
+      {errors !== undefined && (
+        <p className="error">
+          Il y a une erreur dans les matériaux founit
+        </p>
+      )}
     </div>
   );
 };

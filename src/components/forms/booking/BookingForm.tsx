@@ -3,6 +3,12 @@ import React, { useState, useEffect } from 'react';
 import { Booking } from '../../../schema/booking-schema';
 import { useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../../store/store';
+import bookingSum from '../../../helpers/bookingSum';
+
+import { useForm, SubmitHandler } from 'react-hook-form';
+import { z } from 'zod';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { FormBookingSchema } from '../../../schema/checker-schema';
 
 import MaterialBooking from '../../materialBooking/MaterialBooking';
 import BookingCalendar from '../../calendars/bookingCalendar/BookingCalendar';
@@ -14,6 +20,8 @@ import {
 
 import './style.scss';
 
+type Inputs = z.infer<typeof FormBookingSchema>;
+
 type Props = {
   booking: Booking;
   isEditing: boolean;
@@ -21,83 +29,54 @@ type Props = {
 };
 
 const BookingForm = ({ booking, isEditing, setIsEditing }: Props) => {
-  const [dataForm, setDataForm] = useState<Booking>(booking);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const { token } = useAppSelector((state) => state.userSlice);
 
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
-  const { token } = useAppSelector((state) => state.userSlice);
+  const {
+    register,
+    handleSubmit,
+    reset,
+    setValue,
+    watch,
+    formState: { errors },
+  } = useForm({
+    values: booking,
+    resolver: zodResolver(FormBookingSchema),
+  });
 
   useEffect(() => {
-    const materialTotal: number =
-      dataForm.providedMaterialsBooking.length > 0
-        ? dataForm.providedMaterialsBooking.reduce((total, item) => {
-            return total + item.total;
-          }, 0)
-        : 0;
-
-    const bookingTotal: number =
-      dataForm.bookingDates.length * dataForm.pricePerDay;
-
-    const coachingTotal: number =
-      dataForm.coachingTime * dataForm.coachingPriceHour;
-
-    setDataForm((prev) => ({
-      ...prev,
-      total:
-        materialTotal +
-        bookingTotal +
-        coachingTotal +
-        dataForm.downPayment,
-    }));
+    const total = bookingSum(watch());
+    setValue('total', total);
   }, [
-    dataForm.providedMaterialsBooking,
-    dataForm.bookingDates,
-    dataForm.coachingTime,
+    watch('providedMaterialsBooking'),
+    watch('coachingTime'),
+    watch('bookingDates'),
   ]);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-
-    setDataForm((prev) => {
-      if (name === 'coachingTime') {
-        return {
-          ...prev,
-          coachingTime: value === '' ? 0 : parseInt(value),
-        };
-      }
-      return {
-        ...prev,
-        [name]: value.trim(),
-      };
-    });
-  };
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const processForm: SubmitHandler<Inputs> = async (data) => {
     setIsLoading(true);
 
     if (isEditing) {
-      await dispatch(
-        updateBookingService({ token, booking: dataForm })
-      )
+      await dispatch(updateBookingService({ token, booking: data }))
         .unwrap()
         .then((res: number) => {
           if (res === 200 && setIsEditing) {
             setIsEditing(false);
+            reset();
           }
         })
         .catch((error) => console.log(error))
         .finally(() => setIsLoading(false));
     } else {
-      await dispatch(
-        createBookingService({ booking: dataForm, token })
-      )
+      await dispatch(createBookingService({ booking: data, token }))
         .unwrap()
         .then((res: number) => {
           if (res === 201) {
-            navigate(`/view-booking/${dataForm.id}`);
+            navigate(`/view-booking/${data.id}`);
+            reset();
           }
         })
         .catch((error) => console.log(error))
@@ -105,15 +84,19 @@ const BookingForm = ({ booking, isEditing, setIsEditing }: Props) => {
     }
   };
 
+  console.log(errors);
+
   return (
     <div className="form-container">
       <h2>
         {isEditing
-          ? `Modification de réservation pour '${dataForm.materialName}'`
-          : `Nouvelle réservation pour '${dataForm.materialName}'`}
+          ? `Modification de réservation pour '${watch(
+              'materialName'
+            )}'`
+          : `Nouvelle réservation pour '${watch('materialName')}'`}
       </h2>
 
-      <form onSubmit={(e) => handleSubmit(e)}>
+      <form onSubmit={handleSubmit(processForm)}>
         <div className="part-div flex flex__spaceBetween">
           <div className="left-part">
             <h3>Renseignement</h3>
@@ -121,66 +104,73 @@ const BookingForm = ({ booking, isEditing, setIsEditing }: Props) => {
               <label htmlFor="lastName">Nom</label>
               <input
                 type="text"
-                name="lastName"
                 id="lastName"
-                defaultValue={dataForm.lastName}
-                onChange={(e) => handleChange(e)}
+                defaultValue={booking.lastName}
+                {...register('lastName')}
               />
+              {errors.lastName?.message && (
+                <p className="error-message">
+                  {errors.lastName.message}
+                </p>
+              )}
             </div>
 
             <div className="form-div">
               <label htmlFor="firstName">Prénom</label>
               <input
                 type="text"
-                name="firstName"
                 id="firstName"
-                defaultValue={dataForm.firstName}
-                onChange={(e) => handleChange(e)}
+                defaultValue={booking.firstName}
+                {...register('firstName')}
               />
+              {errors.firstName?.message && (
+                <p className="error-message">
+                  {errors.firstName.message}
+                </p>
+              )}
             </div>
 
             <div className="form-div">
-              <label htmlFor="phone">Numéro de téléphone</label>
+              <label htmlFor="phone">Téléphone</label>
               <input
                 type="tel"
-                name="phone"
                 id="phone"
-                defaultValue={dataForm.phone}
-                onChange={(e) => handleChange(e)}
+                {...register('phone')}
+                defaultValue={booking.phone}
               />
-            </div>
-
-            <div className="form-div">
-              <label htmlFor="email">Email</label>
-              <input
-                type="text"
-                name="email"
-                id="email"
-                defaultValue={dataForm.email}
-                onChange={(e) => handleChange(e)}
-              />
+              {errors.phone?.message && (
+                <p className="error-message">
+                  {errors.phone.message}
+                </p>
+              )}
             </div>
 
             <div className="form-div">
               <label htmlFor="city">Ville</label>
               <input
                 type="text"
-                name="city"
                 id="city"
-                defaultValue={dataForm.city}
-                onChange={(e) => handleChange(e)}
+                defaultValue={booking.city}
+                {...register('city')}
               />
+              {errors.city?.message && (
+                <p className="error-message">{errors.city.message}</p>
+              )}
             </div>
 
             <div className="form-div">
               <label htmlFor="street">Rue</label>
               <input
                 type="text"
-                name="street"
                 id="street"
-                defaultValue={dataForm.street}
-                onChange={(e) => handleChange(e)}
+                defaultValue={booking.street}
+                {...register('street')}
               />
+              {errors.street?.message && (
+                <p className="error-message">
+                  {errors.street.message}
+                </p>
+              )}
             </div>
 
             <div className="form-div">
@@ -189,15 +179,19 @@ const BookingForm = ({ booking, isEditing, setIsEditing }: Props) => {
               </label>
               <input
                 type="number"
-                name="coachingTime"
                 id="coachingTime"
-                defaultValue={dataForm.coachingTime}
-                onChange={(e) => handleChange(e)}
+                defaultValue={booking.coachingTime}
+                {...register('coachingTime')}
               />
+              {errors.coachingTime?.message && (
+                <p className="error-message">
+                  {errors.coachingTime.message}
+                </p>
+              )}
             </div>
 
             <div className="form-div">
-              <p>Total : {dataForm.total} €</p>
+              <p>Total : {watch('total')} €</p>
             </div>
           </div>
 
@@ -205,17 +199,17 @@ const BookingForm = ({ booking, isEditing, setIsEditing }: Props) => {
             <div className="top">
               <h3>Définir les dates de la location</h3>
               <BookingCalendar
-                disabledDates={dataForm.unavailableDates}
-                setDataForm={setDataForm}
-                selectedDate={dataForm.bookingDates}
+                disabledDates={watch('unavailableDates')}
+                setValue={setValue}
+                selectedDate={watch('bookingDates')}
               />
             </div>
 
             <div className="down">
               <h3>Matériel à founir</h3>
               <MaterialBooking
-                providedMaterials={dataForm.providedMaterialsBooking}
-                setFormData={setDataForm}
+                providedMaterials={watch('providedMaterialsBooking')}
+                setValue={setValue}
               />
             </div>
           </div>

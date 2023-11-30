@@ -8,7 +8,7 @@ export interface Booking {
   firstName: string;
   lastName: string;
   phone: string;
-  email: string;
+  // email: string;
   city: string;
   street: string;
   unavailableDates: string[] | [];

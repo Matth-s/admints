@@ -16,7 +16,14 @@ button {
   opacity: 0.5;
 }
 
-.text-error {
+.form-div {
+  position: relative;
+}
+
+.error-message {
+  position: absolute;
+  right: 5px;
+  top: 2px;
   color: rgb(228, 98, 98);
 }
 

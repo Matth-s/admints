@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { v4 as uuidv4 } from 'uuid';
+import { UseFormSetValue } from 'react-hook-form';
 
 import {
   providedMaterialsBooking,
@@ -11,50 +12,42 @@ import './style.scss';
 
 type Props = {
   providedMaterials: providedMaterialsBooking[] | [];
-  setFormData: React.Dispatch<React.SetStateAction<Booking>>;
+  setValue: UseFormSetValue<Booking>;
 };
 
-const MaterialBooking = ({
-  providedMaterials,
-  setFormData,
-}: Props) => {
+const MaterialBooking = ({ providedMaterials, setValue }: Props) => {
   const onHandleChange = (
     e: React.ChangeEvent<HTMLInputElement>,
     id: string
   ) => {
     const { value, name } = e.target;
+    const updateMaterialProvided = providedMaterials.map((item) => {
+      if (item.id === id) {
+        if (name === 'quantity' || name === 'price') {
+          return {
+            ...item,
+            [name]: value === '' ? 0 : parseInt(value),
+            total:
+              name === 'price'
+                ? value === ''
+                  ? 0
+                  : parseInt(value) * item.quantity
+                : value === ''
+                ? 0
+                : parseInt(value) * item.price,
+          };
+        } else {
+          return {
+            ...item,
+            [name]: value,
+          };
+        }
+      }
 
-    setFormData((prev) => {
-      return {
-        ...prev,
-        providedMaterialsBooking: prev.providedMaterialsBooking.map(
-          (item) => {
-            if (item.id === id) {
-              if (name === 'quantity' || name === 'price') {
-                return {
-                  ...item,
-                  [name]: value === '' ? 0 : parseInt(value),
-                  total:
-                    name === 'price'
-                      ? value === ''
-                        ? 0
-                        : parseInt(value) * item.quantity
-                      : value === ''
-                      ? 0
-                      : parseInt(value) * item.price,
-                };
-              } else {
-                return {
-                  ...item,
-                  [name]: value,
-                };
-              }
-            }
-            return item;
-          }
-        ),
-      };
+      return item;
     });
+
+    setValue('providedMaterialsBooking', updateMaterialProvided);
   };
 
   const handleAddMaterial = () => {
@@ -66,27 +59,17 @@ const MaterialBooking = ({
       total: 0,
     };
 
-    setFormData((prev) => {
-      return {
-        ...prev,
-        providedMaterialsBooking: [
-          ...prev.providedMaterialsBooking,
-          material,
-        ],
-      };
-    });
+    setValue('providedMaterialsBooking', [
+      ...providedMaterials,
+      material,
+    ]);
   };
 
   const handleDelete = (id: string) => {
-    setFormData((prev) => {
-      return {
-        ...prev,
-        providedMaterialsBooking:
-          prev.providedMaterialsBooking.filter(
-            (item) => item.id !== id
-          ),
-      };
-    });
+    const providedMaterialsFiltred = providedMaterials.filter(
+      (item) => item.id !== id
+    );
+    setValue('providedMaterialsBooking', providedMaterialsFiltred);
   };
 
   return (

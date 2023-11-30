@@ -7,6 +7,8 @@ import { useDropzone } from 'react-dropzone';
 
 import iconCross from '../../assets/icon-cross.svg';
 
+import { UseFormSetValue } from 'react-hook-form';
+
 import './style.scss';
 
 type Props = {
@@ -15,7 +17,7 @@ type Props = {
   files: FileData[];
   images: arrayPicture[];
   setImages: React.Dispatch<React.SetStateAction<arrayPicture[]>>;
-  setFormData: React.Dispatch<React.SetStateAction<Material>>;
+  setValue: UseFormSetValue<Material>;
   presentationPicture: string;
 };
 
@@ -25,7 +27,7 @@ const AddImageForm = ({
   files,
   images,
   setImages,
-  setFormData,
+  setValue,
   presentationPicture,
 }: Props) => {
   const handleRemoveImage = (id: string) => {
@@ -60,12 +62,7 @@ const AddImageForm = ({
   });
 
   const handleImageMain = (id: string) => {
-    setFormData((prev) => {
-      return {
-        ...prev,
-        presentationPicture: id,
-      };
-    });
+    setValue('presentationPicture', id);
   };
 
   const thumbs =
