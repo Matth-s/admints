@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 
 import { useAppDispatch, useAppSelector } from '../../store/store';
-import { toast } from 'react-toastify';
+import { toastMessage } from '../../helpers/toastMessage';
 
 import {
   getBookingById,
@@ -71,31 +71,13 @@ const ViewBookingPage = () => {
         .unwrap()
         .then((res: number) => {
           if (res === 200) {
-            toast.success('Réservation marqué comme payé', {
-              position: 'bottom-center',
-              autoClose: 5000,
-              hideProgressBar: false,
-              closeOnClick: true,
-              pauseOnHover: true,
-              draggable: true,
-              progress: undefined,
-              theme: 'light',
-            });
+            toastMessage('Réservation marqué comme payé', true);
           }
         })
         .catch(() => {
-          toast.error(
+          toastMessage(
             'Une erreur est survenue lors de la mise à jour',
-            {
-              position: 'bottom-center',
-              autoClose: 5000,
-              hideProgressBar: false,
-              closeOnClick: true,
-              pauseOnHover: true,
-              draggable: true,
-              progress: undefined,
-              theme: 'light',
-            }
+            false
           );
         });
     }

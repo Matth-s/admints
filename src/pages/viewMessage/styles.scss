@@ -1,0 +1,12 @@
+.view-message-container {
+  .action {
+    display: flex;
+    width: fit-content;
+    margin: 40px auto;
+    gap: 20px;
+  }
+
+  .loading {
+    opacity: 0.5;
+  }
+}

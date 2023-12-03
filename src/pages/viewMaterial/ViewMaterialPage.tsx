@@ -19,13 +19,11 @@ import BackButton from '../../components/buttons/back/BackButton';
 
 import './style.scss';
 
-
 const ViewMaterialPage = () => {
   const { id } = useParams();
   const dispatch = useAppDispatch();
 
-  const [isLoading, setIsLoading] = useState<boolean>();
-  const [notFound, setNotFound] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isEditing, setIsEditing] = useState<boolean>(false);
 
   //modal
@@ -37,15 +35,9 @@ const ViewMaterialPage = () => {
   );
 
   const getMaterial = async (id: string) => {
-    await dispatch(getMaterialByIdService({ id }))
-      .unwrap()
-      .then()
-      .catch((error: any) => {
-        if (error.message.includes(404)) {
-          setNotFound(true);
-        }
-      })
-      .finally(() => setIsLoading(false));
+    await dispatch(getMaterialByIdService({ id })).finally(() =>
+      setIsLoading(false)
+    );
   };
 
   useEffect(() => {
@@ -55,7 +47,16 @@ const ViewMaterialPage = () => {
     }
   }, []);
 
-  if (notFound) {
+  if (isLoading) {
+    return (
+      <>
+        <Header />
+        <Loader />
+      </>
+    );
+  }
+
+  if (!viewMaterial && !isLoading) {
     return (
       <>
         <Header />
@@ -67,70 +68,64 @@ const ViewMaterialPage = () => {
   return (
     <div className="view-material-container">
       <Header />
-      {isLoading ? (
-        <Loader />
-      ) : (
-        viewMaterial && (
-          <section>
-            <BackButton />
+      {viewMaterial && (
+        <section>
+          <BackButton />
 
-            <ActionBar
-              setIsEditing={setIsEditing}
-              setOpenDelete={setOpenDelete}
+          <ActionBar
+            setIsEditing={setIsEditing}
+            setOpenDelete={setOpenDelete}
+            material={viewMaterial}
+          />
+
+          {isEditing ? (
+            <MaterialForm
               material={viewMaterial}
+              isEditing={true}
+              setIsEditing={setIsEditing}
             />
-
-            {isEditing ? (
-              <MaterialForm
-                material={viewMaterial}
-                isEditing={true}
-                setIsEditing={setIsEditing}
+          ) : (
+            <>
+              <Carousel
+                arrayPicture={viewMaterial.arrayPicture}
+                presentationPicture={viewMaterial.presentationPicture}
               />
-            ) : (
-              <>
-                <Carousel
-                  arrayPicture={viewMaterial.arrayPicture}
-                  presentationPicture={
-                    viewMaterial.presentationPicture
-                  }
+
+              <div className="information-div flex">
+                <MaterialInformation material={viewMaterial} />
+                <ProvidedMaterial
+                  provided={viewMaterial.providedMaterials}
                 />
+              </div>
 
-                <div className="information-div flex">
-                  <MaterialInformation material={viewMaterial} />
-                  <ProvidedMaterial
-                    provided={viewMaterial.providedMaterials}
-                  />
-                </div>
+              <button
+                className="view-calendar"
+                onClick={() => setOpenCalendar(() => true)}
+              >
+                Afficher le calendrier
+              </button>
 
-                <button
-                  className="view-calendar"
-                  onClick={() => setOpenCalendar(() => true)}
-                >
-                  Afficher le calendrier
-                </button>
+              {openCalendar &&
+                createPortal(
+                  <CalendarModal
+                    closeModal={() => setOpenCalendar(false)}
+                    disabledDates={viewMaterial.unavailableDates}
+                  />,
+                  document.body
+                )}
 
-                {openCalendar &&
-                  createPortal(
-                    <CalendarModal
-                      closeModal={() => setOpenCalendar(false)}
-                      disabledDates={viewMaterial.unavailableDates}
-                    />,
-                    document.body
-                  )}
-
-                {openDelete &&
-                  createPortal(
-                    <DeleteMaterialModal
-                      closeModal={() => setOpenDelete(false)}
-                      id={viewMaterial.id}
-                      name={viewMaterial.name}
-                    />,
-                    document.body
-                  )}
-              </>
-            )}
-          </section>
-        )
+              {openDelete &&
+                createPortal(
+                  <DeleteMaterialModal
+                    closeModal={() => setOpenDelete(false)}
+                    id={viewMaterial.id}
+                    name={viewMaterial.name}
+                  />,
+                  document.body
+                )}
+            </>
+          )}
+        </section>
       )}
     </div>
   );

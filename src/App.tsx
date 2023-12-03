@@ -18,6 +18,7 @@ import CreateBookingPage from './pages/createBooking/CreateBookingPage';
 import ViewBookingPage from './pages/viewBooking/ViewBookingPage';
 import MessagingPage from './pages/messaging/MessagingPage';
 import { getAllMessagingService } from './services/messaging-service';
+import ViewMessage from './pages/viewMessage/ViewMessage';
 
 function App() {
   const dispatch = useAppDispatch();
@@ -109,6 +110,11 @@ function App() {
                 element={
                   <MessagingPage isLoading={messaginLoading} />
                 }
+              />
+
+              <Route
+                path="/messaging/view-message/:id"
+                element={<ViewMessage />}
               />
             </Route>
 

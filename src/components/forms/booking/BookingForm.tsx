@@ -84,8 +84,6 @@ const BookingForm = ({ booking, isEditing, setIsEditing }: Props) => {
     }
   };
 
-  console.log(errors);
-
   return (
     <div className="form-container">
       <h2>

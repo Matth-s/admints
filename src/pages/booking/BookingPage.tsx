@@ -4,7 +4,7 @@ import Header from '../../components/header/Header';
 import Loader from '../../components/loader/Loader';
 import BookingCard from '../../components/bookingCard/BookingCard';
 import SearchBarBooking from '../../components/searchBarBooking/SearchBarBooking';
-import { formatSearchChoice } from '../../helpers/searchChoice';
+
 import { useAppSelector } from '../../store/store';
 
 import './style.scss';
