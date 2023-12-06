@@ -1,7 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { Message } from '../../schema/message';
-import { Booking } from '../../schema/booking-schema';
 
 interface MessagingState {
   message: Message[] | [];

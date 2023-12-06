@@ -71,7 +71,7 @@ const BookingPage = ({ isLoading }: Props) => {
                 <th>Date de fin</th>
                 <th>Matériel</th>
                 <th>Nom</th>
-                <th>Prenom</th>
+                <th>Prénom</th>
                 <th>Total</th>
                 <th>Status</th>
                 <th></th>

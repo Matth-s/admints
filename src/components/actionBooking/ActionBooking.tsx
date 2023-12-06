@@ -28,7 +28,7 @@ const ActionBooking = ({
         Devis
       </button>
       <button onClick={() => setOpenModalDelete(() => true)}>
-        Suprimer
+        Supprimer
       </button>
     </div>
   );

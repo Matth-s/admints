@@ -20,7 +20,7 @@ const Header = () => {
 
       <nav className={`flex  ${openMenu ? '' : 'close'}`}>
         <ul className="flex flex__alignCenter">
-          <NavLink to="/material">Materiel</NavLink>
+          <NavLink to="/material">Matériel</NavLink>
           <NavLink to="/create-material">Ajouter une annonce</NavLink>
           <NavLink to="/booking">Réservation</NavLink>
           <NavLink to="/messaging">Messagerie</NavLink>

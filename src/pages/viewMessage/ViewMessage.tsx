@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { toastMessage } from '../../helpers/toastMessage';
 import { useAppDispatch, useAppSelector } from '../../store/store';
 import { useNavigate, useParams } from 'react-router-dom';
+import { Message } from '../../schema/message';
 import {
   getMessage,
   deleteMessage,
@@ -11,10 +12,12 @@ import {
 
 import Header from '../../components/header/Header';
 import Loader from '../../components/loader/Loader';
+import BackButton from '../../components/buttons/back/BackButton';
 
 import 'react-toastify/dist/ReactToastify.css';
+
 import './styles.scss';
-import { Message } from '../../schema/message';
+import ProvidedMaterialBooking from '../../components/providedMaterialBooking/providedMaterialBooking';
 
 export default function ViewMessage() {
   const dispatch = useAppDispatch();
@@ -110,6 +113,7 @@ export default function ViewMessage() {
       <Header />
       {viewMessage && (
         <section>
+          <BackButton />
           <div className="action">
             <button
               onClick={() => handleCreateReservation()}
@@ -131,6 +135,13 @@ export default function ViewMessage() {
             >
               Supprimer
             </button>
+          </div>
+
+          <div>
+            Matériel demandé :
+            <ProvidedMaterialBooking
+              material={viewMessage.providedMaterialsBooking}
+            />
           </div>
         </section>
       )}
