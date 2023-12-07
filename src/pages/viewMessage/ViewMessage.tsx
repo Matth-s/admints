@@ -13,11 +13,10 @@ import {
 import Header from '../../components/header/Header';
 import Loader from '../../components/loader/Loader';
 import BackButton from '../../components/buttons/back/BackButton';
+import ProvidedMaterialBooking from '../../components/providedMaterialBooking/ProvidedMaterialBooking';
 
 import 'react-toastify/dist/ReactToastify.css';
-
 import './styles.scss';
-import ProvidedMaterialBooking from '../../components/providedMaterialBooking/providedMaterialBooking';
 
 export default function ViewMessage() {
   const dispatch = useAppDispatch();

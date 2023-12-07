@@ -20,7 +20,7 @@ import ActionBooking from '../../components/actionBooking/ActionBooking';
 import DeleteBookingModal from '../../components/modals/deleteBookingModal/DeleteBookingModal';
 import ViewPdfModal from '../../components/modals/viewPdfModal/ViewPdfModal';
 import BookingForm from '../../components/forms/booking/BookingForm';
-import BookingInformation from '../../components/bookingInformartion/BookingInformation';
+import BookingInformation from '../../components/bookingInformation/BookingInformation';
 import BackButton from '../../components/buttons/back/BackButton';
 
 import 'react-toastify/dist/ReactToastify.css';

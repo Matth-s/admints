@@ -73,8 +73,9 @@ const AddImageForm = ({
           presentationPicture.includes(item.id) ? 'image-main' : ''
         } thumbs-container`}
         key={item.id}
+        onClick={() => handleImageMain(item.id)}
       >
-        <div onClick={() => handleImageMain(item.id)}>
+        <div>
           <img src={item.src} alt={item.id} />
           <button onClick={() => handleRemoveImage(item.id)}>
             <img src={iconCross} alt="supprimer" />

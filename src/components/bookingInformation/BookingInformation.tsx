@@ -1,6 +1,6 @@
 import { putSpaceOnString } from '../../helpers/spacingPhone';
 import { Booking } from '../../schema/booking-schema';
-import ProvidedMaterialBooking from '../providedMaterialBooking/providedMaterialBooking';
+import ProvidedMaterialBooking from '../providedMaterialBooking/ProvidedMaterialBooking';
 
 import './style.scss';
 
